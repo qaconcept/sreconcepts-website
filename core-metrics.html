@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Reliability Metrics (SLI, SLO, SLA) | SRE Concepts</title>
+    <meta name="description" content="A beginner-friendly practical guide to understanding SRE metrics: SLIs, SLOs, SLAs, the 4 Golden Signals, and RED metrics.">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">SRE<span>CONCEPTS</span></a>
+            <button class="hamburger" id="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="observability.html">Observability</a></li>
+                <li><a href="incident-response.html">Incident Response</a></li>
+                <li><a href="tools-resources.html">Tools & Resources</a></li>
+                <li>
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">☀️</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 3rem 1.5rem; max-width: 900px;">
+        
+        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+            <a href="index.html">Home</a> &gt; Core Concepts &gt; Core Reliability Metrics
+        </div>
+
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.03em;">
+            Core Reliability Metrics
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2.5rem; line-height: 1.7;">
+            Reliability isn't a vague feeling—it's quantifiable math. Learn how to construct exact, objective operational telemetry bounds using the foundational SRE trifecta: SLIs, SLOs, and SLAs.
+        </p>
+
+        <div style="background-color: var(--bg-secondary); border-left: 4px solid var(--accent-color); padding: 1.5rem; margin-bottom: 3rem; border-radius: 0 0.5rem 0.5rem 0; font-size: 0.95rem;">
+            <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.1rem;">💡 Coaching Perspective: Calibrating Service Baselines</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 0.75rem;">
+                When I coached newly formed SRE squads at <strong>The Hartford</strong>, the most common roadblock was moving teams away from broad uptime metrics ("Our servers are at 99.9% CPU availability") and toward user-centric metrics. 
+            </p>
+            <p style="color: var(--text-secondary);">
+                True site reliability engineering means establishing measurements that correlate directly with real customer impact. If your telemetry data shows a healthy server but your users are staring at a broken checkout screen, you are measuring the wrong things.
+            </p>
+        </div>
+
+        <section style="margin-bottom: 3rem;">
+            <h2>The Reliability Hierarchy: SLI vs. SLO vs. SLA</h2>
+            <p style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                To understand software platform reliability, you must master three distinct boundaries. They form a nested hierarchy of operational accountability:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 0.375rem;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">SLI: The Indicator</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;"><strong>"What is the quantitative measure of our system performance right now?"</strong></p>
+                    <p style="font-size: 0.9rem;">The raw mathematical calculation checking good events against total events.</p>
+                </div>
+                <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 0.375rem;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">SLO: The Objective</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;"><strong>"What is the internal target boundary we promise to maintain?"</strong></p>
+                    <p style="font-size: 0.9rem;">The specific target percentage that defines whether the service is reliable enough over a rolling period.</p>
+                </div>
+                <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 0.375rem;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">SLA: The Agreement</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;"><strong>"What are the commercial or legal consequences if we fail?"</strong></p>
+                    <p style="font-size: 0.9rem;">The external business contract outlining financial refunds, service credits, or legal penalties.</p>
+                </div>
+            </div>
+
+            <div style="background-color: var(--bg-accent); padding: 1.25rem; border-radius: 0.375rem; text-align: center; margin-bottom: 2.5rem; border: 1px solid var(--border-color);">
+                <p style="font-size: 0.95rem; margin-bottom: 0.75rem; font-weight: 600;">Ready to execute this hierarchy in production?</p>
+                <a href="slo-sli-sla.html" style="background-color: var(--accent-color); color: #0f172a; padding: 0.5rem 1.2rem; border-radius: 0.25rem; font-weight: bold; text-decoration: none; display: inline-block; font-size: 0.9rem;">
+                    Open the Step-by-Step Implementation Guide &rarr;
+                </a>
+            </div>
+
+            <div class="mermaid-container">
+                <div class="mermaid">
+                    graph TD
+                    A[SLI: Raw telemetry calculation] -->|Feeds into| B[SLO: Internal target milestone e.g., 99.9%]
+                    B -->|Defines structural buffer for| C[SLA: Commercial penalty threshold e.g., 99.0%]
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-bottom: 3rem;">
+            <h2>The Core SLI Mathematical Formula</h2>
+            <p style="margin-top: 1rem; margin-bottom: 1rem;">
+                An SLI must always translate into a ratio between 0% and 100%. The foundational SRE formula is structured as follows:
+            </p>
+            <pre style="text-align: center; font-size: 1.1rem; padding: 1.5rem;"><code>SLI = ( Good Events / Total Events ) &times; 100</code></pre>
+            
+            <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Example - API Success Rate SLI:</h4>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                The proportion of valid HTTP requests that return an explicit status code lower than 500, measured over a rolling 30-day structural window.
+            </p>
+        </section>
+
+        <section style="margin-bottom: 3rem;">
+            <h2>The Core SRE Metric Frameworks</h2>
+            <p style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                To translate formulas into monitoring environments (such as Datadog, Splunk, or Prometheus), SREs organize their alerting strategies around two primary operational models.
+            </p>
+
+            <div style="border: 1px solid var(--border-color); background-color: var(--bg-secondary); padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+                <h3 style="color: var(--accent-color); font-size: 1.3rem; margin-bottom: 0.75rem;">📋 The Four Golden Signals</h3>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Derived directly from Google's engineering playbooks, these metrics represent the core properties universally monitored across distributed user-facing software architectures:
+                </p>
+                <ul style="padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.7;">
+                    <li><strong>Latency:</strong> The precise duration it takes to process a service request (e.g., distinguishing between a successful HTTP 200 response taking 50ms versus an error HTTP 500 failing in 10ms).</li>
+                    <li><strong>Traffic:</strong> A real-world measure of user demand being placed on your target infrastructure footprint (e.g., HTTP requests per second or concurrent processing transaction lines).</li>
+                    <li><strong>Errors:</strong> The absolute rate or percentage of requests that fail explicitly (e.g., HTTP 5xx codes) or implicitly (e.g., an HTTP 200 response delivering incorrect or empty payload contents).</li>
+                    <li><strong>Saturation:</strong> A measurement of how "full" your service infrastructure resources are, tracking system bottlenecks before they cause downstream latency spikes (e.g., memory utilization or database thread limits).</li>
+                </ul>
+            </div>
+
+            <div style="border: 1px solid var(--border-color); background-color: var(--bg-secondary); padding: 1.5rem; border-radius: 0.5rem;">
+                <h3 style="color: var(--accent-color); font-size: 1.3rem; margin-bottom: 0.75rem;">⚡ The RED Method</h3>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Popularized by Tom Wilkie, this methodology is specifically optimized to evaluate transient microservices, cloud containers, and transactional API endpoints:
+                </p>
+                <ul style="padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.7;">
+                    <li><strong>Rate:</strong> The volume of API requests per second your containerized service pool is processing.</li>
+                    <li><strong>Errors:</strong> The absolute number or percentage of those incoming requests that fail during transit.</li>
+                    <li><strong>Duration:</strong> The exact performance distribution profiles (typically tracking p95 and p99 percentiles) highlighting the time those transactions take to execute.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section style="margin-bottom: 3rem;">
+            <h2>Standardized JSON SLO Definition Template</h2>
+            <p style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                Use this clean JSON blueprint format to document and declare your service objectives across your platform registries or repository configurations.
+            </p>
+            
+            <pre><code>{
+  "service_name": "checkout-transaction-pipeline",
+  "sli_specification": {
+    "type": "availability_success_ratio",
+    "numerator_source": "count_http_responses_where_status_less_than_500",
+    "denominator_source": "total_incoming_http_requests_processed"
+  },
+  "service_level_objectives": [
+    {
+      "target_percentage": 99.9,
+      "rolling_window_days": 30,
+      "alerting_thresholds": {
+        "immediate_page_burn_rate": 14.4,
+        "warning_ticket_burn_rate": 2.0
+      }
+    }
+  ],
+  "stakeholders": {
+    "engineering_lead": "sre-squad-alpha",
+    "product_owner": "ecommerce-checkout-group"
+  }
+}</code></pre>
+        </section>
+
+        <section style="border-top: 1px solid var(--border-color); padding-top: 2rem;">
+            <h2>Further Reading & Official Industry References</h2>
+            <p style="margin-top: 0.5rem; margin-bottom: 1rem;">To further review the foundational mathematical parameters of modern Site Reliability Engineering, examine these industry guides:</p>
+            <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                <li>
+                    <a href="https://sre.google/sre-book/service-level-objectives/" target="_blank" rel="noopener noreferrer">
+                        Google SRE Handbook: Chapter 4 - Service Level Objectives
+                    </a>
+                </li>
+                <li>
+                    <a href="https://sre.google/workbook/implementing-slos/" target="_blank" rel="noopener noreferrer">
+                        Google SRE Workbook: Chapter 2 - Implementing SLOs Practical Worksheets
+                    </a>
+                </li>
+                <li>
+                    <a href="https://grafana.com/blog/2018/08/02/the-red-method-how-to-scan-your-microservices-metrics/" target="_blank" rel="noopener noreferrer">
+                        The RED Method: How to Design Service Metrics (Tom Wilkie / Grafana Labs)
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SREConcepts.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

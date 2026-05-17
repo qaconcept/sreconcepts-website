@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRE Concepts | Practical Site Reliability Engineering Guide</title>
+    <meta name="description" content="A practical, beginner-friendly guide to Site Reliability Engineering (SRE) concepts, observability, automation, and incident response.">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Two-column layout for the Top Hero/Introduction Section */
+        .hero-layout-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            align-items: flex-start;
+        }
+
+        /* Top Left Sidebar Navigation Panel */
+        .top-left-sidebar {
+            flex: 1;
+            min-width: 280px;
+            max-width: 340px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-left-sidebar h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .sidebar-panel-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-panel-links li {
+            margin-bottom: 0.85rem;
+        }
+
+        .sidebar-panel-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: block;
+            line-height: 1.4;
+        }
+
+        .sidebar-panel-links a:hover {
+            color: var(--accent-color);
+            transform: translateX(4px);
+        }
+
+        /* Top Right Main Text Area */
+        .hero-main-content {
+            flex: 3;
+            min-width: 320px;
+        }
+
+        /* Descriptive Card Grid Configuration */
+        .concepts-main-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Fallback for smaller screen sizes */
+        @media (max-width: 991px) {
+            .top-left-sidebar {
+                max-width: 100%;
+                flex: 1 1 100%;
+            }
+            .hero-main-content {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">SRE<span>CONCEPTS</span></a>
+            <button class="hamburger" id="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="observability.html">Observability</a></li>
+                <li><a href="incident-response.html">Incident Response</a></li>
+                <li><a href="tools-resources.html">Tools & Resources</a></li>
+                <li><a href="about.html">About the Author</a></li>
+                <li>
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">☀️</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero-section" style="padding: 4rem 0; text-align: left; background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary)); border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            
+            <div class="hero-layout-container">
+                
+                <nav class="top-left-sidebar" aria-label="SRE Concepts Top Left Navigation">
+                    <h3>SRE Core Concepts:</h3>
+                    <ul class="sidebar-panel-links">
+                        <li><a href="core-metrics.html">1. Core Reliability Metrics &rarr;</a></li>
+                        <li><a href="error-budgets.html">2. Error Budgets &rarr;</a></li>
+                        <li><a href="toil-reduction.html">3. Toil Reduction & Automation &rarr;</a></li>
+                        <li><a href="observability.html">4. Monitoring & Observability &rarr;</a></li>
+                        <li><a href="incident-response.html">5. Incident Response & Triage &rarr;</a></li>
+                        <li><a href="blameless-postmortems.html">6. Blameless Culture &rarr;</a></li>
+                        <li><a href="release-engineering.html">7. Release Engineering &rarr;</a></li>
+                        <li><a href="capacity-planning.html">8. Capacity Planning &rarr;</a></li>
+                        <li><a href="aws-migration.html">9. AWS Migration Strategy &rarr;</a></li>
+                    </ul>
+                </nav>
+
+                <div class="hero-main-content">
+                    <h1 style="font-size: 2.6rem; margin-bottom: 1.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2;">
+                        Practical Site Reliability Engineering for Beginners
+                    </h1>
+                    
+                    <div style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem;">
+                        <p style="margin-bottom: 1.25rem;"><strong>Welcome to SRE Concepts</strong> — a practical, beginner-friendly guide to Site Reliability Engineering.</p>
+                        
+                        <p style="margin-bottom: 1.25rem;">This site was created to help developers, DevOps engineers, sysadmins, and aspiring SREs understand and apply real-world reliability practices without getting lost in heavy theory. Every concept here is drawn from hands-on production experience across multiple organizations.</p>
+                        
+                        <p style="margin-bottom: 1.25rem;">Site Reliability Engineering (SRE) is a discipline that combines software engineering with operations. It focuses on creating and maintaining highly reliable, scalable systems while enabling teams to ship features quickly and safely. Originally developed at Google, SRE has now become the industry standard for running mission-critical services in the cloud era.</p>
+                        
+                        <p style="margin-bottom: 2rem; font-style: italic; color: var(--accent-color);">The goal of SRE is simple but powerful: Maximize reliability without sacrificing velocity.</p>
+                        
+                        <h3 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 0.75rem; font-weight: 700;">What is SRE?</h3>
+                        <p style="margin-bottom: 1.25rem;">SRE treats operations as a software problem. Instead of manually running servers and reacting to outages, SREs use code, automation, monitoring, data, and clear service level objectives to proactively build reliability into systems.</p>
+                        
+                        <p style="margin-bottom: 0.5rem;">Key principles include:</p>
+                        <ul style="padding-left: 1.5rem; margin-bottom: 2rem;">
+                            <li style="margin-bottom: 0.35rem;">Measuring reliability with data (not just gut feel)</li>
+                            <li style="margin-bottom: 0.35rem;">Using error budgets to balance innovation and stability</li>
+                            <li style="margin-bottom: 0.35rem;">Automating repetitive work (toil reduction)</li>
+                            <li style="margin-bottom: 0.35rem;">Learning from incidents through blameless postmortems</li>
+                            <li style="margin-bottom: 0.35rem;">Building observability into every service</li>
+                        </ul>
+                        
+                        <h3 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 0.75rem; font-weight: 700;">What You Will Learn on This Site</h3>
+                        <p style="margin-bottom: 1.25rem;">This website covers the core foundations and practical skills every SRE needs:</p>
+                        <ul style="padding-left: 1.5rem; margin-bottom: 1.25rem;">
+                            <li style="margin-bottom: 0.35rem;"><strong>Core Reliability Metrics</strong> — Understanding SLI, SLO, and SLA</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Error Budgets</strong> — How to calculate them and use them to make better decisions</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Toil Reduction & Automation</strong> — Identifying and eliminating manual repetitive work</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Monitoring & Observability</strong> — Golden Signals, RED metrics, and modern tooling (including Datadog)</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Incident Response & Triage</strong> — Building effective on-call and incident management processes</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Blameless Culture</strong> — Writing high-quality postmortems and fostering psychological safety</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Release Engineering</strong> — Safe deployment strategies and testing practices</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Capacity Planning</strong> — Preparing your systems for growth</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>AWS Migration Strategy</strong> — The 6 Rs and practical cloud migration approaches</li>
+                        </ul>
+                        <p style="margin-bottom: 2rem;">Each topic includes clear explanations, real-world examples, checklists, templates, and lessons learned from production environments.</p>
+                        
+                        <h3 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 0.75rem; font-weight: 700;">Why This Site Exists</h3>
+                        <p style="margin-bottom: 1.25rem;">After spending years as a Site Reliability Engineer and SRE Coach across companies like The Hartford, Scratch Foundation, Virtustream, LexisNexis, and Bed Bath & Beyond, I created this resource to help others accelerate their SRE journey. The focus is always on practical application — what actually works in real production systems.</p>
+                        
+                        <p style="margin-bottom: 0px;">Whether you're just getting started or looking to level up your reliability practices, I hope you find this site valuable.</p>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; justify-content: flex-start;">
+                        <a href="#guide-topics" style="background-color: var(--accent-color); color: #0f172a; padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 600; text-decoration: none;">Explore Descriptions</a>
+                        <a href="about.html" style="border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 600; text-decoration: none;">About the Author</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section id="guide-topics" style="padding: 4rem 0;">
+        <div class="container">
+            <h2 style="font-size: 2rem; margin-bottom: 0.5rem; text-align: center;">SRE Core Concepts</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">Click on any topic below to jump directly into deep-dives, code templates, and execution checklists.</p>
+            
+            <div class="concepts-main-grid">
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="core-metrics.html">1. Core Reliability Metrics</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Master the operational math behind Service Level Indicators (SLIs), Service Level Objectives (SLOs), and SLAs to accurately define service health.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="error-budgets.html">2. Error Budgets</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Learn how to balance product development velocity with structural infrastructure stability using objective error budget calculations.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="toil-reduction.html">3. Toil Reduction & Automation</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Identify, measure, and eliminate manual, repetitive operational tasks using code-driven automation workflows.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="observability.html">4. Monitoring & Observability</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Implement telemetry stacks using Golden Signals and RED metrics. Walkthrough real setups using Datadog, Splunk, and OpenTelemetry.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="incident-response.html">5. Incident Response & Triage</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Accelerate your Mean Time to Resolution (MTTR). Learn modern incident triage, communication paths, and PagerDuty alert dynamics.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="blameless-postmortems.html">6. Blameless Culture</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Build an organizational culture of psychological safety. Download customizable root-cause templates and postmortem guidelines.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="release-engineering.html">7. Release Engineering</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Incorporate safe deployment pipelines, automated canary analyses, and robust CI/CD gate checks to catch flaws early.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="capacity-planning.html">8. Capacity Planning</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Forecast load limits, execute automated stress testing configurations, and manage cloud resource provisioning effectively.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="aws-migration.html">9. AWS Migration Strategy</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Migrate on-prem systems to AWS efficiently using the 6 Rs framework, cloud architecture models, and automated guardrails.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="featured-tools" style="padding: 4rem 0; background-color: var(--bg-secondary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <h2 style="font-size: 2rem; margin-bottom: 0.5rem; text-align: center;">Featured Open-Source Observability Stacks</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">Production-ready, highly available infrastructure blueprints engineered for immediate deployment.</p>
+            
+            <div class="card-grid">
+                <div class="card" style="background-color: var(--bg-primary);">
+                    <div style="font-size: 0.8rem; font-family: monospace; color: var(--accent-color); margin-bottom: 0.5rem;">AWS / ECS / INFRASTRUCTURE</div>
+                    <h4 style="font-size: 1.15rem; margin-bottom: 0.75rem;">vault-aws-fargate-ha</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Production-grade HashiCorp Vault on AWS ECS Fargate using integrated Raft Storage and AWS KMS Auto-Unseal configuration.</p>
+                    <a href="https://github.com/qaconcept/vault-aws-fargate-ha" target="_blank" style="font-size: 0.9rem; font-weight: 600;">View GitHub Repository &rarr;</a>
+                </div>
+                <div class="card" style="background-color: var(--bg-primary);">
+                    <div style="font-size: 0.8rem; font-family: monospace; color: var(--accent-color); margin-bottom: 0.5rem;">LOCAL / DOCKER / OPENTELEMETRY</div>
+                    <h4 style="font-size: 1.15rem; margin-bottom: 0.75rem;">local-prometheus-grafana-otel-collector</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">A containerized, lightweight open-source Observability Core using Prometheus, Grafana, OpenTelemetry Collector, and Jaeger.</p>
+                    <a href="https://github.com/qaconcept/local-prometheus-grafana-otel-collector" target="_blank" style="font-size: 0.9rem; font-weight: 600;">View GitHub Repository &rarr;</a>
+                </div>
+                <div class="card" style="background-color: var(--bg-primary);">
+                    <div style="font-size: 0.8rem; font-family: monospace; color: var(--accent-color); margin-bottom: 0.5rem;">AWS / CLOUD / OBSERVABILITY</div>
+                    <h4 style="font-size: 1.15rem; margin-bottom: 0.75rem;">aws-prometheus-grafana-otel-collector</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">An AWS High-Availability Observability Stack featuring managed AWS Prometheus, Grafana integration, and OpenTelemetry Collector routing.</p>
+                    <a href="https://github.com/qaconcept/aws-prometheus-grafana-otel-collector" target="_blank" style="font-size: 0.9rem; font-weight: 600;">View GitHub Repository &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

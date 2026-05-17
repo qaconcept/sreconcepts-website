@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLI, SLO, & SLA Implementation Workbook | SRE Concepts</title>
+    <meta name="description" content="A comprehensive guide to designing and executing a bottom-up reliability framework using Critical User Journeys, SLIs, SLOs, SLAs, and Error Budgets.">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">SRE<span>CONCEPTS</span></a>
+            <button class="hamburger" id="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="observability.html">Observability</a></li>
+                <li><a href="incident-response.html">Incident Response</a></li>
+                <li><a href="tools-resources.html">Tools & Resources</a></li>
+                <li>
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">☀️</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 3rem 1.5rem; max-width: 900px;">
+        
+        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+            <a href="index.html">Home</a> &gt; <a href="core-metrics.html">Core Metrics</a> &gt; SLI-SLO-SLA Framework
+        </div>
+
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.03em;">
+            SLI, SLO, & SLA Implementation Guide
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2.5rem; line-height: 1.7;">
+            Implementing SLIs, SLOs, and SLAs requires a disciplined, bottom-up engineering approach: measure exactly what matters to users with SLIs, establish internal protective reliability boundaries using SLOs, and define external business or legal guarantees via SLAs.
+        </p>
+
+        <div style="background-color: var(--bg-secondary); border-left: 4px solid var(--accent-color); padding: 1.5rem; margin-bottom: 3rem; border-radius: 0 0.5rem 0.5rem 0; font-size: 0.95rem;">
+            <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.1rem;">📊 Strategic Execution: Building from User Journeys</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 0.75rem;">
+                During my tenure advisory sessions coaching engineering cohorts at <strong>The Hartford</strong>, I routinely observed teams trying to reverse-engineer their operational metrics. They would start by drafting legal SLA numbers in a vacuum, then scramble to build alerts to map to them. 
+            </p>
+            <p style="color: var(--text-secondary);">
+                The workbook sequence outlined below demonstrates the successful bottom-up alternative: uncover your application's <strong>Critical User Journeys (CUJs)</strong> first, instrument those precise vectors with real-time math, and build a protective structural gap between internal performance alerts and external commercial payout liabilities.
+            </p>
+        </div>
+
+        <section style="margin-bottom: 3rem;">
+            <h2>The Bottom-Up Reliability Architecture</h2>
+            <div class="mermaid-container">
+                graph TD
+                SLA[Step 3: SLA - Business Commitments & Financial Penalties]
+                SLO[Step 2: SLO - Internal Targets & Error Budgets Protection]
+                SLI[Step 1: SLI - Real-Time Telemetry Math via Prometheus/Grafana]
+                CUJ[Foundations: Critical User Journeys CUJs]
+                CUJ --> SLI
+                SLI -->|Buffers| SLO
+                SLO -->|Protects| SLA
+                style SLI fill:var(--bg-secondary),stroke:var(--accent-color),stroke-width:2px
+                style SLO fill:var(--bg-secondary),stroke:var(--accent-color),stroke-width:2px
+                style SLA fill:var(--bg-secondary),stroke:var(--border-color),stroke-width:1px
+            </div>
+        </section>
+
+        <section style="margin-bottom: 4rem;">
+            
+            <div style="margin-bottom: 3rem; border-bottom: 1px solid var(--border-color); padding-bottom: 2rem;">
+                <h3 style="font-size: 1.5rem; color: var(--accent-color); margin-bottom: 0.75rem;">Step 1: Define Service Level Indicators (SLIs)</h3>
+                <p style="margin-bottom: 1rem;"> An SLI is a concrete, quantifiable metric that evaluates the actual service performance delivered to an end-user at any given moment.</p>
+                
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">How to Implement:</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                    Isolate your system's Critical User Journeys (CUJs). Do not attempt to track every single API method immediately. Focus heavily on these three foundational behaviors:
+                </p>
+                <ul style="padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.7;">
+                    <li><strong>Availability:</strong> The literal proportion of time a service endpoint functions as expected (e.g., <code>Successful Requests / Total Requests</code>).</li>
+                    <li><strong>Latency:</strong> The execution speed of valid transactions (e.g., The p95 response duration of a checkout action must be <code>&le; 200ms</code>).</li>
+                    <li><strong>Error Rate:</strong> The processing frequency of explicit structural defects (e.g., <code>HTTP 5xx Status Code Returns / Total Request Volume</code>).</li>
+                </ul>
+                <p style="font-size: 0.95rem;"><strong>Tooling Baseline:</strong> Leverage open-source tools like <strong>Prometheus</strong> and <strong>Grafana</strong> or enterprise platforms like <strong>Datadog</strong> and <strong>Splunk</strong> to hook applications directly and generate these real-time metric streams.</p>
+            </div>
+
+            <div style="margin-bottom: 3rem; border-bottom: 1px solid var(--border-color); padding-bottom: 2rem;">
+                <h3 style="font-size: 1.5rem; color: var(--accent-color); margin-bottom: 0.75rem;">Step 2: Set Service Level Objectives (SLOs)</h3>
+                <p style="margin-bottom: 1rem;">An SLO is the precise, numerical target objective your engineering organization pledges to maintain for a defined SLI over a structural rolling timeline.</p>
+                
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">How to Implement:</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                    Base your initial targets on 30 to 90 days of verifiable, historical system telemetry records rather than arbitrary, ideal aspirations. 
+                </p>
+                <ul style="padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.7;">
+                    <li><strong>The Safety Buffer Rule:</strong> Your internal SLO target must <em>always</em> be significantly stricter (higher required uptime percentage, lower acceptable latency limits) than any external SLA promised to marketplace clients.</li>
+                    <li><strong>Example Target Architecture:</strong> "The overall availability of our transactional checkout endpoint will achieve <code>99.9%</code> efficiency over any rolling 28-day window."</li>
+                    <li><strong>Error Budget Implementation:</strong> If your availability target is set to <code>99.9%</code>, your team owns a structural <code>0.1%</code> Error Budget. This represents permissible downtime that your engineering squads can actively spend to ship rapid, innovative features—provided that buffer isn't completely depleted.</li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 3rem; border-bottom: 1px solid var(--border-color); padding-bottom: 2rem;">
+                <h3 style="font-size: 1.5rem; color: var(--accent-color); margin-bottom: 0.75rem;">Step 3: Establish Service Level Agreements (SLAs)</h3>
+                <p style="margin-bottom: 1rem;">An SLA is the formal business agreement or legally binding commitment signed between your enterprise and your external user base.</p>
+                
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">How to Implement:</h4>
+                <p style="color: var(--text-secondary); margin-bottom: 1.25rem;">
+                    Combine your baseline SLO thresholds with direct business consequences or legal/financial penalties (such as service credits or proportional monthly contract refunds) that take effect if the threshold is breached.
+                </p>
+                <div style="background-color: var(--bg-primary); padding: 1rem; border: 1px solid var(--border-color); border-radius: 0.25rem; font-family: monospace; font-size: 0.9rem; margin-bottom: 1rem;">
+                    SLA Example: "We guarantee a minimum of 99.5% monthly application availability. If performance drops below this boundary, affected customers are entitled to a 10% refund of core monthly infrastructure service fees."
+                </div>
+                <p style="font-size: 0.95rem; color: var(--text-secondary);"><strong>Best Practice Strategy:</strong> Only extend formal SLAs to high-impact transaction models, and intentionally decouple them from your real targets to prevent unexpected commercial payouts during transient microservice incidents.</p>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 style="font-size: 1.5rem; color: var(--accent-color); margin-bottom: 0.75rem;">Step 4: Continuous Monitoring and Refinement</h3>
+                <p style="margin-bottom: 1rem;">A reliability framework cannot succeed without dynamic, automated monitoring tracking systems in real time.</p>
+                
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">How to Implement:</h4>
+                <ul style="padding-left: 1.5rem; margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.7;">
+                    <li>Configure alert routing logic (such as PagerDuty endpoints) to trigger when your service <strong>Error Budget burns too quickly</strong> over narrow, predictive windows, rather than waiting until a catastrophic outage has already consumed the entire buffer.</li>
+                    <li>Conduct formal, cross-functional reviews of all active SLO metrics and SLA targets on a quarterly loop. Adjust parameters to account for infrastructure updates, client behavioral feedback, and recurring operational seasonality.</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section style="margin-bottom: 4rem;">
+            <h2>SRE Service Level Definition Specification Template</h2>
+            <p style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                Copy and paste this standardized configuration matrix framework into your internal engineering repository or system registry to map your team's bottom-up metrics definition pipeline.
+            </p>
+            
+            <pre><code># service-reliability-spec.yaml
+version: "sre.concepts/v1alpha"
+metadata:
+  service_name: "user-authentication-hub"
+  domain: "identity-services"
+  owner_team: "squad-security-ops"
+
+critical_user_journey:
+  description: "User submits credentials via identity portal and receives a valid JWT token."
+  business_impact: "Catastrophic failure blocks 100% of active marketplace customer interaction lines."
+
+service_level_indicator:
+  metric_name: "http_request_duration_seconds"
+  description: "Ratio of successful authentications completing in under 250 milliseconds."
+  mathematical_formula: "count(http_requests_where_status_200_and_duration_less_250ms) / total(http_requests_to_login)"
+  telemetry_source: "prometheus_query_engine"
+
+service_level_objective:
+  target_percentage: 99.90
+  compliance_window: "28_day_rolling"
+  error_budget_percentage: 0.10
+  action_when_budget_exhausted: "Halt active non-security feature development; divert capacity to testing pipeline hardening."
+
+service_level_agreement:
+  legal_commitment_percentage: 99.50
+  breach_penalty: "15% service credit issued per contract node under compliance threshold."
+  legal_review_schedule: "Quarterly_Operational_Audit"</code></pre>
+        </section>
+
+        <section style="border-top: 1px solid var(--border-color); padding-top: 2rem;">
+            <h2>Further Reading & Official Reliability Worksheets</h2>
+            <p style="margin-top: 0.5rem; margin-bottom: 1rem;">To further review bottom-up service definitions and operational indicators, examine these industry-standard guidelines:</p>
+            <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                <li>
+                    <a href="https://sre.google/workbook/service-level-objectives/" target="_blank" rel="noopener noreferrer">
+                        Google SRE Workbook: Chapter 2 - Implementing SLOs and Defining CUJs
+                    </a>
+                </li>
+                <li>
+                    <a href="https://sre.google/sre-book/service-level-objectives/" target="_blank" rel="noopener noreferrer">
+                        Google SRE Handbook: Chapter 4 - Detailed Metrics Theory Basics
+                    </a>
+                </li>
+                <li>
+                    <a href="https://prometheus.io/docs/practices/instrumentation/" target="_blank" rel="noopener noreferrer">
+                        Official Prometheus Core Code Instrumentation Best Practices Documentation
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SREConcepts.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

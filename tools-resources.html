@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRE Tools & Resources | SRE Concepts</title>
+    <meta name="description" content="Production-ready open-source observability blueprints and curated learning resources for Site Reliability Engineering.">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">SRE<span>CONCEPTS</span></a>
+            <button class="hamburger" id="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="observability.html">Observability</a></li>
+                <li><a href="incident-response.html">Incident Response</a></li>
+                <li><a href="tools-resources.html" class="active">Tools & Resources</a></li>
+                <li>
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">☀️</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 3rem 1.5rem; max-width: 950px;">
+        
+        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+            <a href="index.html">Home</a> &gt; Tools & Resources
+        </div>
+
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.03em;">
+            SRE Tools & Open-Source Blueprints
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 3rem; line-height: 1.7;">
+            Accelerate your engineering infrastructure roadmap. Below you will find fully functional, architectural blueprints optimized for high availability, zero vendor lock-in, and cost-efficient cloud scaling.
+        </p>
+
+        <section style="margin-bottom: 4rem;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                🛠️ Open-Source Infrastructure Stacks
+            </h2>
+
+            <div id="vault" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2rem; border-radius: 0.5rem; margin-bottom: 2.5rem;">
+                <div style="font-size: 0.8rem; font-family: monospace; color: var(--accent-color); font-weight: bold; margin-bottom: 0.5rem;">AWS / ECS FARGATE / SECURITY</div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">vault-aws-fargate-ha</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                    A production-grade deployment of HashiCorp Vault on AWS ECS Fargate utilizing integrated Raft Storage and AWS KMS for automated Auto-Unseal operations. This structure eliminates the operational overhead of maintaining EC2 host patching regimens while safeguarding cryptographic secrets management.
+                </p>
+                
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-primary);">Key Architectural Features:</h4>
+                <ul style="padding-left: 1.25rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    <li>High Availability across multiple AWS Availability Zones via an Application Load Balancer.</li>
+                    <li>Zero manual unseal keys handling; auto-unseal runs natively via secure AWS KMS keys policies.</li>
+                    <li>Persistent Raft data replication maps directly over Amazon EFS volumes attached to Fargate tasks.</li>
+                </ul>
+
+                <div class="mermaid-container" style="background-color: var(--bg-primary); margin-bottom: 1.5rem;">
+                    <div class="mermaid">
+                        graph TD
+                        ALB[Application Load Balancer] --> F1[ECS Fargate Task - Node 1]
+                        ALB --> F2[ECS Fargate Task - Node 2]
+                        F1 & F2 --> EFS[(Shared EFS Storage - Raft)]
+                        F1 & F2 --> KMS[AWS KMS - Auto Unseal]
+                    </div>
+                </div>
+
+                <a href="https://github.com/qaconcept/vault-aws-fargate-ha" target="_blank" rel="noopener noreferrer" style="font-size: 0.95rem; font-weight: 600; color: var(--accent-color); text-decoration: none; display: inline-block;">View GitHub Repository &rarr;</a>
+            </div>
+
+            <div id="local-otel" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2rem; border-radius: 0.5rem; margin-bottom: 2.5rem;">
+                <div style="font-size: 0.8rem; font-family: monospace; color: var(--accent-color); font-weight: bold; margin-bottom: 0.5rem;">LOCAL / DOCKER / MONITORING</div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">local-prometheus-grafana-otel-collector</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                    A fully containerized, lightweight open-source Observability Core intended for local environment development or localized edge device deployments. It demonstrates how to accept vendor-agnostic OpenTelemetry streams and route them to data visualizers without reliance on corporate subscriptions.
+                </p>
+                
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-primary);">Key Architectural Features:</h4>
+                <ul style="padding-left: 1.25rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    <li>Bundles **Prometheus** (metrics storage), **Jaeger** (distributed tracing maps), and **Grafana** (unified dashboard layer).</li>
+                    <li>Pre-configured **OpenTelemetry Collector** processing queues for application lines parsing.</li>
+                    <li>Orchestrated completely via a singular `docker-compose.yaml` configuration with zero external dependencies.</li>
+                </ul>
+
+                <div class="mermaid-container" style="background-color: var(--bg-primary); margin-bottom: 1.5rem;">
+                    <div class="mermaid">
+                        graph LR
+                        App[Target Application] -->|OTLP gRPC| OTel[OpenTelemetry Collector]
+                        OTel -->|Scraped Metrics| Prom[(Prometheus)]
+                        OTel -->|Pushed Traces| Jaeger[(Jaeger)]
+                        Prom & Jaeger --> Grafana[Unified Grafana Dashboards]
+                    </div>
+                </div>
+
+                <a href="https://github.com/qaconcept/local-prometheus-grafana-otel-collector" target="_blank" rel="noopener noreferrer" style="font-size: 0.95rem; font-weight: 600; color: var(--accent-color); text-decoration: none; display: inline-block;">View GitHub Repository &rarr;</a>
+            </div>
+
+            <div id="aws-otel" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2rem; border-radius: 0.5rem;">
+                <div style="font-size: 0.8rem; font-family: monospace; color: var(--accent-color); font-weight: bold; margin-bottom: 0.5rem;">AWS / CLOUD HYBRID / ENTERPRISE TELEMETRY</div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">aws-prometheus-grafana-otel-collector</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                    An enterprise-grade cloud blueprint translating the OpenTelemetry framework into a managed cloud-native model. This stack handles ingestion scaling effortlessly by utilizing AWS native managed telemetry backends.
+                </p>
+                
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-primary);">Key Architectural Features:</h4>
+                <ul style="padding-left: 1.25rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    <li>Streams metrics collection data into high-availability **Amazon Managed Service for Prometheus (AMP)** endpoints.</li>
+                    <li>Secures cross-service metric authorization layers using native AWS IAM SigV4 query signing protocols.</li>
+                    <li>Visualizes structural telemetry outputs seamlessly inside isolated **Amazon Managed Grafana (AMG)** instances.</li>
+                </ul>
+
+                <a href="https://github.com/qaconcept/aws-prometheus-grafana-otel-collector" target="_blank" rel="noopener noreferrer" style="font-size: 0.95rem; font-weight: 600; color: var(--accent-color); text-decoration: none; display: inline-block;">View GitHub Repository &rarr;</a>
+            </div>
+        </section>
+
+        <section style="margin-bottom: 3rem; border-top: 1px solid var(--border-color); padding-top: 2rem;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem;">📚 Definitive SRE Reference Library</h2>
+            <p style="margin-bottom: 1.5rem;">The following industry books and references serve as the baseline source material for global Site Reliability Engineering frameworks:</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <div style="background-color: var(--bg-secondary); padding: 1.25rem; border-radius: 0.375rem; border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 0.5rem;"><a href="https://sre.google/sre-book/table-of-contents/" target="_blank" rel="noopener noreferrer">The Google SRE Book</a></h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">The foundational literature that introduced the SRE discipline to the wider engineering world, focusing on system designs and operational metrics.</p>
+                </div>
+                <div style="background-color: var(--bg-secondary); padding: 1.25rem; border-radius: 0.375rem; border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 0.5rem;"><a href="https://sre.google/workbook/table-of-contents/" target="_blank" rel="noopener noreferrer">The Google SRE Workbook</a></h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">A practical follow-up to the original handbook providing exact implementation case studies for tracking error budgets and defining SLIs.</p>
+                </div>
+                <div style="background-color: var(--bg-secondary); padding: 1.25rem; border-radius: 0.375rem; border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 0.5rem;"><a href="https://www.scrum.org/" target="_blank" rel="noopener noreferrer">Scrum.org Official Agile Hub</a></h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">The official knowledge base for modern Agile practices, product iterations velocity frameworks, and Professional Scrum Master guidelines.</p>
+                </div>
+            </div>
+        </section>
+
+        <section style="background: linear-gradient(135deg, var(--bg-secondary), var(--bg-accent)); border: 1px solid var(--border-color); padding: 2rem; border-radius: 0.5rem; text-align: center; margin-top: 4rem;">
+            <h3 style="margin-bottom: 0.5rem;">Have Questions About These Blueprints?</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                If you are planning an enterprise infrastructure modernization strategy or want to dive deeper into custom monitoring pipelines, let's collaborate on LinkedIn.
+            </p>
+            <a href="https://www.linkedin.com/in/darien-buchanan-ba226846" target="_blank" rel="noopener noreferrer" style="background-color: #0077b5; color: white; padding: 0.7rem 1.5rem; border-radius: 0.25rem; font-weight: bold; text-decoration: none; display: inline-block;">
+                Connect with Darien Buchanan
+            </a>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SREConcepts.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

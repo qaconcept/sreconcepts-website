@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring & Observability | SRE Concepts</title>
+    <meta name="description" content="A practical guide to SRE observability, the 4 Golden Signals, RED metrics, and production-ready telemetry architectures.">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">SRE<span>CONCEPTS</span></a>
+            <button class="hamburger" id="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="observability.html" class="active">Observability</a></li>
+                <li><a href="incident-response.html">Incident Response</a></li>
+                <li><a href="tools-resources.html">Tools & Resources</a></li>
+                <li>
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">☀️</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 3rem 1.5rem; max-width: 900px;">
+        
+        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+            <a href="index.html">Home</a> &gt; Core Concepts &gt; Monitoring & Observability
+        </div>
+
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.03em;">
+            Monitoring & Observability
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2.5rem; line-height: 1.7;">
+            Moving past basic uptime checks. Learn how to transform raw distributed system telemetry data into actionable operational insights using modern metrics frameworks and open-source telemetry pipelines.
+        </p>
+
+        <section style="margin-bottom: 3rem;">
+            <h2>Monitoring vs. Observability: The Fundamental Paradigm Shift</h2>
+            <p style="margin-top: 1rem; margin-bottom: 1rem;">
+                Many engineering organizations use these terms interchangeably, but they represent entirely different operational approaches:
+            </p>
+            <ul style="padding-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li style="margin-bottom: 0.5rem;"><strong>Monitoring:</strong> Tracks known failure modes ("Is my CPU usage over 85%?", "Is the application answering on port 443?"). It tells you <em>when</em> a pre-defined threshold breaks.</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Observability:</strong> Infers the internal states of a system based solely on its external outputs (Telemetry). It allows you to debug novel, unexpected edge failures ("Why are users in a specific region experiencing 500 errors only when checking out with a specific payment method?").</li>
+            </ul>
+
+            <div class="mermaid-container">
+                <div class="mermaid">
+                    graph LR
+                    A[Raw System Telemetry] --> B(Metrics: Aggregates over time)
+                    A --> C(Logs: Discrete time-stamped events)
+                    A --> D(Traces: Request end-to-end paths)
+                    B & C & D --> E[Actionable Observability Dashboard]
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-bottom: 3rem;">
+            <h2>The Core SRE Telemetry Frameworks</h2>
+            <p style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                To build reliable dashboards that do not overwhelm on-call engineers with alarm fatigue, SREs standardize around structured observability frameworks.
+            </p>
+
+            <h3 style="color: var(--accent-color); margin-bottom: 0.5rem;">1. Google SRE's 4 Golden Signals</h3>
+            <p style="margin-bottom: 1rem;">Optimized for general distributed user-facing software architectures:</p>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden;">
+                <thead>
+                    <tr style="background-color: var(--bg-accent); text-align: left;">
+                        <th style="padding: 0.75rem; font-size: 0.9rem;">Signal</th>
+                        <th style="padding: 0.75rem; font-size: 0.9rem;">Definition</th>
+                        <th style="padding: 0.75rem; font-size: 0.9rem;">Practical Target Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem; font-weight: bold;">Latency</td>
+                        <td style="padding: 0.75rem; color: var(--text-secondary);">The time it takes to service a request.</td>
+                        <td style="padding: 0.75rem; font-family: monospace;">p99 Latency &lt; 250ms</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem; font-weight: bold;">Traffic</td>
+                        <td style="padding: 0.75rem; color: var(--text-secondary);">A measure of how much demand is being placed on the system.</td>
+                        <td style="padding: 0.75rem; font-family: monospace;">HTTP requests/sec (RPS)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem; font-weight: bold;">Errors</td>
+                        <td style="padding: 0.75rem; color: var(--text-secondary);">The rate of requests that fail explicitly or implicitly.</td>
+                        <td style="padding: 0.75rem; font-family: monospace;">HTTP 5xx responses &gt; 0.01%</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; font-weight: bold;">Saturation</td>
+                        <td style="padding: 0.75rem; color: var(--text-secondary);">How "full" your system is (memory, disk I/O constraints).</td>
+                        <td style="padding: 0.75rem; font-family: monospace;">AWS ECS Memory Utilization</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: var(--accent-color); margin-bottom: 0.5rem;">2. The RED Method</h3>
+            <p style="margin-bottom: 1.5rem;">Specifically tailored for modern Microservice environments and API endpoints:</p>
+            <ul style="padding-left: 1.5rem; margin-bottom: 2rem;">
+                <li style="margin-bottom: 0.5rem;"><strong>Rate:</strong> The volume of requests per second your services are processing.</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Errors:</strong> The absolute number or percentage of those requests that fail.</li>
+                <li style="margin-bottom: 0.5rem;"><strong>Duration:</strong> The precise distribution profile of time those requests take to complete.</li>
+            </ul>
+        </section>
+
+        <section style="margin-bottom: 3rem; background-color: var(--bg-secondary); padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+            <h2 style="font-size: 1.4rem; margin-bottom: 1rem;">🛠️ Enterprise Tooling Playbook</h2>
+            <p style="font-size: 0.95rem; margin-bottom: 1rem;">
+                Throughout my 27-year operational career at enterprises like <strong>The Hartford, Scratch Foundation, and LexisNexis</strong>, I've managed complex monitoring platform migrations. Here is how you map those exact telemetry platforms to these frameworks:
+            </p>
+            <ul style="font-size: 0.95rem; padding-left: 1.25rem; color: var(--text-secondary);">
+                <li style="margin-bottom: 0.75rem;"><strong style="color: var(--text-primary);">Datadog:</strong> Excellent for unified application performance monitoring (APM), serverless AWS Lambda tracing, synthetic end-to-end testing hooks, and calculating native SLO tracking bars directly from custom infrastructure telemetry logs.</li>
+                <li style="margin-bottom: 0.75rem;"><strong style="color: var(--text-primary);">New Relic & Splunk:</strong> Leverage Splunk's powerful text processing search queries to isolate distributed application error signatures alongside New Relic APM agent instrumentation lines to maintain end-to-end p95/p99 transaction insight profiles.</li>
+                <li style="margin-bottom: 0.75rem;"><strong style="color: var(--text-primary);">Sumo Logic, CA Spectrum, & CA UIM:</strong> Critical telemetry nodes for central log aggregation, synthetic fault infrastructure tracking, network fabric monitoring, and processing baseline operational alert distributions.</li>
+            </ul>
+        </section>
+
+        <section style="margin-bottom: 3rem;">
+            <h2>OpenTelemetry Collector Configuration Blueprint</h2>
+            <p style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                To avoid vendor lock-in, modern SRE architectures leverage the vendor-agnostic <strong>OpenTelemetry (OTel) Collector</strong> pipeline. Below is a complete configuration template used to collect, process, and stream metrics/traces out to Prometheus and Jaeger endpoints.
+            </p>
+            
+            <pre><code># otel-collector-config.yaml
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: 'otel-collector'
+          scrape_interval: 15s
+          static_configs:
+            - targets: ['localhost:8888']
+
+processors:
+  batch:
+    timeout: 1s
+    send_batch_size: 256
+
+exporters:
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+    namespace: "sreconcepts"
+  otlp/jaeger:
+    endpoint: "jaeger:4317"
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp, prometheus]
+      processors: [batch]
+      exporters: [prometheus]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/jaeger]</code></pre>
+        </section>
+
+        <section style="margin-bottom: 3rem;">
+            <h3>Deploy this Observability Core Locally</h3>
+            <p style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                You can experiment with this exact pipeline configuration natively in minutes. I have compiled and optimized a lightweight, zero-dependency local telemetry footprint blueprint:
+            </p>
+            <div style="background-color: var(--bg-primary); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 0.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h4 style="margin-bottom: 0.25rem;">local-prometheus-grafana-otel-collector</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Containerized open-source Observability Core using Prometheus, Grafana, OpenTelemetry Collector, and Jaeger.</p>
+                </div>
+                <a href="tools-resources.html#local-otel" style="background-color: var(--bg-accent); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 0.25rem; font-size: 0.85rem; font-weight: 600; text-decoration: none;">View Repo Details</a>
+            </div>
+        </section>
+
+        <section style="border-top: 1px solid var(--border-color); padding-top: 2rem;">
+            <h2>Further Reading & Official SRE References</h2>
+            <p style="margin-top: 0.5rem; margin-bottom: 1rem;">To dive deeper into the theory and industry execution models of monitoring and telemetry, check out these authoritative industry materials:</p>
+            <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                <li>
+                    <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener noreferrer">
+                        Google SRE Handbook: Chapter 6 - Monitoring Distributed Systems
+                    </a>
+                </li>
+                <li>
+                    <a href="https://opentelemetry.io/docs/concepts/what-is-opentelemetry/" target="_blank" rel="noopener noreferrer">
+                        Official OpenTelemetry Architecture Concepts Documentation
+                    </a>
+                </li>
+                <li>
+                    <a href="https://grafana.com/blog/2018/08/02/the-red-method-how-to-scan-your-microservices-metrics/" target="_blank" rel="noopener noreferrer">
+                        The RED Method: How to Design Service Metrics (Tom Wilkie / Grafana Labs)
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SREConcepts.com. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
