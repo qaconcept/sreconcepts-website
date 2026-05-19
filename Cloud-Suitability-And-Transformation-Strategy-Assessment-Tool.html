@@ -7,9 +7,72 @@
     <meta name="description" content="A comprehensive, multi-dimensional diagnostic framework for Senior Infrastructure Architects evaluating cloud suitability, migration archetypes, and structural risk factors.">
     <link rel="stylesheet" href="css/styles.css">
     <style>
+        /* Two-column structural layout configuration matching index.html */
+        .page-layout-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            align-items: flex-start;
+        }
+
+        /* Sticky Left Sidebar Panel matching index.html top-left-sidebar rules */
+        .left-sidebar {
+            flex: 1;
+            min-width: 280px;
+            max-width: 340px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 2rem;
+            z-index: 10;
+        }
+
+        .left-sidebar h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .sidebar-panel-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-panel-links li {
+            margin-bottom: 0.85rem;
+        }
+
+        .sidebar-panel-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: block;
+            line-height: 1.4;
+        }
+
+        .sidebar-panel-links a:hover {
+            color: var(--accent-color);
+            transform: translateX(4px);
+        }
+
+        /* Main Content Container wrapper within layout grid */
+        .tool-main-content {
+            flex: 3;
+            min-width: 320px;
+        }
+
         /* Custom Document Styles mirroring existing SRE Concepts layouts */
         .strategy-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2.5rem 1.5rem;
         }
@@ -31,23 +94,23 @@
             background-color: var(--bg-secondary);
             border-left: 4px solid var(--accent-color);
             padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0 2rem 0;
             border-radius: 0.25rem;
-            margin: 1.5rem 0;
             font-style: italic;
-            color: var(--text-secondary);
-            line-height: 1.6;
+            color: var(--text-primary);
         }
 
-        /* Excel-Style Tables Layout */
-        .excel-table-wrapper {
+        /* Diagnostic Interactive Data Matrices */
+        .matrix-table-wrapper {
+            width: 100%;
             overflow-x: auto;
-            margin: 1.5rem 0 2.5rem 0;
+            margin: 2rem 0;
             border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        .excel-table {
+        .matrix-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.95rem;
@@ -55,178 +118,138 @@
             background-color: var(--bg-secondary);
         }
 
-        .excel-table th {
-            background-color: rgba(255, 255, 255, 0.04);
+        .matrix-table th {
+            background-color: rgba(255, 255, 255, 0.02);
             color: var(--text-primary);
-            font-weight: 700;
-            padding: 0.75rem 1rem;
+            font-weight: 600;
+            padding: 1rem;
             border-bottom: 2px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
         }
 
-        .excel-table td {
-            padding: 0.85rem 1rem;
+        .matrix-table td {
+            padding: 1rem;
             border-bottom: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
             color: var(--text-secondary);
-            vertical-align: middle;
+            vertical-align: top;
         }
 
-        .excel-table tr:last-child td {
+        .matrix-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        .matrix-table tr:last-child td {
             border-bottom: none;
         }
 
-        .excel-table th:last-child, .excel-table td:last-child {
-            border-right: none;
-        }
-
-        /* Input Controls for Self Scoring Elements */
+        /* Numerical Assessment Inputs Configuration */
         .score-input {
-            width: 65px;
-            padding: 0.4rem 0.5rem;
+            width: 70px;
             background-color: var(--bg-primary);
             border: 1px solid var(--border-color);
-            border-radius: 0.25rem;
             color: var(--text-primary);
-            font-family: monospace;
-            font-size: 0.95rem;
+            padding: 0.4rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
             text-align: center;
-            font-weight: bold;
         }
 
         .score-input:focus {
-            border-color: var(--accent-color);
             outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
         }
 
-        /* Red Flag Warning Identifiers */
-        .red-flag-row {
-            background-color: rgba(239, 68, 68, 0.04);
-        }
-        
-        .red-flag-row td {
-            color: var(--text-primary);
-        }
-
-        .red-flag-badge {
-            display: inline-block;
-            background-color: rgba(239, 68, 68, 0.15);
-            color: #f87171;
-            padding: 0.2rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            margin-right: 0.5rem;
+        /* Interactive Dashboard Styling */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
 
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.9rem;
-        }
-
-        .checkbox-container input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: #ef4444;
-            cursor: pointer;
-        }
-
-        /* Textarea and Lists Formatting */
-        .qualitative-textbox {
-            width: 100%;
-            min-height: 80px;
+        .dash-card {
             background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
-            padding: 0.75rem;
-            color: var(--text-primary);
-            font-family: inherit;
-            margin-top: 0.5rem;
-            margin-bottom: 1.5rem;
-            resize: vertical;
-        }
-
-        .qualitative-textbox:focus {
-            border-color: var(--accent-color);
-            outline: none;
-        }
-
-        .doc-section-title {
-            margin-top: 3.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-primary);
-            font-weight: 800;
-        }
-
-        .domain-title {
-            color: var(--text-primary);
-            margin-top: 2rem;
-            font-size: 1.35rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Interactive Calculation Dashboard Engine Styling */
-        .calc-btn-container {
+            border-radius: 0.5rem;
+            padding: 1.5rem;
             text-align: center;
-            margin: 3rem 0;
         }
 
-        .calc-btn {
-            background-color: var(--accent-color);
-            color: var(--bg-primary);
-            padding: 0.85rem 2rem;
-            border: none;
-            border-radius: 0.375rem;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: opacity 0.2s ease;
-        }
-
-        .calc-btn:hover {
-            opacity: 0.9;
-        }
-
-        /* Status Badges */
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            font-weight: bold;
+        .dash-card h4 {
+            margin-top: 0;
             font-size: 0.85rem;
-            padding: 0.25rem 0.6rem;
-            border-radius: 0.25rem;
-        }
-        .status-green { background-color: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-        .status-yellow { background-color: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3); }
-        .status-red { background-color: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-
-        .nested-checklist {
-            list-style: none;
-            padding-left: 0;
-            margin: 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
         }
 
-        .nested-checklist li {
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
+        .dash-metric {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin: 0.5rem 0;
         }
 
-        .nested-checklist input[type="checkbox"] {
-            margin-top: 0.25rem;
-            accent-color: var(--accent-color);
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-green { background-color: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .status-yellow { background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .status-red { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        .eval-btn {
+            background-color: var(--accent-color);
+            color: #0f172a;
+            border: none;
+            padding: 0.85rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: transform 0.15s ease, background-color 0.15s ease;
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            margin: 2.5rem auto;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .eval-btn:hover {
+            transform: translateY(-1px);
+            background-color: #7dd3fc;
+        }
+
+        .eval-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Checkbox customization for red flags */
+        .rf-cb {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #ef4444;
+        }
+
+        /* Responsive Fallback Configurations */
+        @media (max-width: 991px) {
+            .left-sidebar {
+                max-width: 100%;
+                flex: 1 1 100%;
+                position: static;
+                margin-bottom: 2rem;
+            }
+            .tool-main-content {
+                flex: 1 1 100%;
+            }
         }
     </style>
 </head>
@@ -242,8 +265,9 @@
             </button>
             <ul class="nav-links" id="nav-links">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="observability.html">Observability</a></li>
+                <li><a href="incident-response.html">Incident Response</a></li>
                 <li><a href="tools-resources.html">Tools & Resources</a></li>
-                <li><a href="about.html">About the Author</a></li>
                 <li>
                     <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">☀️</button>
                 </li>
@@ -251,1168 +275,376 @@
         </div>
     </header>
 
-    <main class="container strategy-container">
-        
-        <h1>Cloud Suitability &amp; Transformation Strategy Questionnaire</h1>
-        <p class="lead" style="color: var(--text-secondary); margin-bottom: 1.5rem;">
-            <strong>Target Audience:</strong> AWS / Cloud Senior Architects – Transition or Transformation Frameworks
-        </p>
+    <div class="strategy-container">
+        <div class="page-layout-container">
 
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 2rem 0;">
+            <nav class="left-sidebar" aria-label="SRE Concepts Left Side Navigation">
+                <h3>SRE Core Concepts:</h3>
+                <ul class="sidebar-panel-links">
+                    <li><a href="core-metrics.html">1. Core Reliability Metrics &rarr;</a></li>
+                    <li><a href="observability.html">2. Monitoring & Observability &rarr;</a></li>
+                    <li><a href="error-budgets.html">3. Error Budgets &rarr;</a></li>
+                    <li><a href="incident-response.html">4. Incident Response & Triage &rarr;</a></li>
+                    <li><a href="blameless-postmortems.html">5. Blameless Culture &rarr;</a></li>
+                    <li><a href="toil-reduction.html">6. Toil Reduction & Automation &rarr;</a></li>
+                    <li><a href="release-engineering.html">7. Release Engineering &rarr;</a></li>
+                    <li><a href="capacity-planning.html">8. Capacity Planning &rarr;</a></li>
+                    <li><a href="Cloud-Suitability-And-Transformation-Strategy-Assessment-Tool.html">9. Cloud Suitability And Transformation Strategy Questionnaire Tool &rarr;</a></li>
+                    <li><a href="aws-migration.html">10. AWS Migration Strategy &rarr;</a></li>
+                </ul>
+            </nav>
 
-        <section id="document-goal">
-            <h2>Goal of this Questionnaire</h2>
-            <p>To provide a data-driven, multi-dimensional assessment that determines:</p>
-            <ul style="line-height: 1.7; padding-left: 1.5rem; margin-bottom: 1.5rem;">
-                <li>Whether moving to cloud computing is beneficial for your organization</li>
-                <li>Which migration strategy (full cloud, hybrid, or on-premises retention) aligns with your business and technical constraints</li>
-                <li>The appropriate transition approach (lift &amp; shift vs. refactoring vs. re-architecting)</li>
-                <li>Readiness gaps in cost, security, reliability, performance, people, sustainability, operations, data transfer, vendor lock‑in, and organizational change management</li>
-            </ul>
-        </section>
+            <main class="tool-main-content">
+                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    <a href="index.html">Home</a> &gt; Tools &gt; Cloud Suitability Assessment
+                </div>
 
-        <section id="document-summary">
-            <h2>Summary</h2>
-            <p>
-                This questionnaire is structured into <strong>17 domains</strong> reflecting the AWS Well-Architected Framework, real‑world cloud transformation lessons, and organizational change management mechanisms.
-            </p>
-            <p>
-                Each question uses a standard <strong>1–5 scoring scale</strong> (1 = strongly disagree / very poor / completely unprepared; 5 = strongly agree / excellent / fully prepared). Red flag questions highlight structural or critical operational risks when scored &le; 2.
-            </p>
-            <p>
-                After scoring, a comprehensive <strong>decision matrix</strong>, <strong>migration pattern reference tables</strong>, and an <strong>executive readiness dashboard</strong> help translate collected indicators into actionable board-ready recommendations.
-            </p>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: -0.03em;">
+                    Cloud Suitability &amp; Transformation Strategy Assessment Tool
+                </h1>
+                <p style="color: var(--accent-color); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; margin-bottom: 1.5rem;">
+                    Enterprise Execution Framework for Senior Infrastructure Architects
+                </p>
 
-            <div class="architect-blockquote">
-                <strong>Architect’s Note:</strong> This document serves as a structured pre‑qualification filter. If any red flag parameter is triggered within Security, Staff Ability, or Rollback domains, resolve those structural engineering vulnerabilities prior to investing capital into a full migration discovery phase.
-            </div>
-        </section>
+                <p style="font-size: 1.1rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    Evaluating legacy enterprise infrastructure suites requires an objective, quantitative grading process rather than abstract hand-waving assumptions. This framework transforms migration discussions into explicit data matrices across five critical evaluation fields.
+                </p>
 
-        <section id="document-instructions">
-            <h2>Instructions for Respondents</h2>
-            <ul style="line-height: 1.7; padding-left: 1.5rem; margin-bottom: 2rem;">
-                <li>Answer based strictly on your <strong>current state</strong> (not speculative future states or intended plans).</li>
-                <li>Use the 1–5 assessment scale transparently and honestly.</li>
-                <li>For each specified red flag item, note whether your internal score evaluates to &le; 2 and mark the checkbox accordingly.</li>
-                <li>Gather quantitative inputs from finance, security, enterprise operations, and native application owners—not strictly infrastructure IT.</li>
-            </ul>
-        </section>
+                <div class="architect-blockquote">
+                    "A migration strategy chosen without hard numerical telemetry is simply an outage waiting to happen. SRE discipline requires proving suitability before refactoring code bases."
+                </div>
 
-        <h2 class="doc-section-title">DOMAINS &amp; QUESTIONS</h2>
+                <div class="alert-callout">
+                    <strong>⚠️ CRITICAL RED FLAG INSTRUCTIONS:</strong> If any target parameter scores <strong>&le; 2</strong> or features an active <strong>Hard Block Check</strong>, you must explicitly pause migration execution paths for that specific workload. These parameters pinpoint severe migration hazards that will degrade availability targets inside public cloud fabrics.
+                </div>
 
-        <section id="domain-1">
-            <h3 class="domain-title">Domain 1: Cost Optimization &amp; Financial Readiness</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1.1</td>
-                            <td>We have a clear, itemized breakdown of our current on-premises total cost of ownership (TCO), including hardware lifecycle, software licenses, facility power/cooling, and staffing.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="cost"></td>
-                        </tr>
-                        <tr>
-                            <td>1.2</td>
-                            <td>Our current infrastructure utilization (CPU, memory, storage) averages less than 40% for most servers, indicating idle capacity waste.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="cost"></td>
-                        </tr>
-                        <tr>
-                            <td>1.3</td>
-                            <td>We have workloads with highly variable or seasonal demand (e.g., end-of-month spikes, holiday traffic) that make fixed capacity expensive.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="cost"></td>
-                        </tr>
-                        <tr>
-                            <td>1.4</td>
-                            <td>Our finance team is comfortable shifting from CAPEX (hardware purchases) to OPEX (monthly cloud bills) and can adjust budgeting cycles accordingly.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="cost"></td>
-                        </tr>
-                        <tr>
-                            <td>1.5</td>
-                            <td>We have the ability to implement cost governance (budget alerts, tagging, automated shutdown of non-production resources) without excessive overhead.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="cost"></td>
-                        </tr>
-                        <tr class="red-flag-row">
-                            <td>1.6</td>
-                            <td><span class="red-flag-badge">Red Flag</span> <em>Risk Factor:</em> Our workloads run 24/7 with steady, predictable utilization and no significant variance – cloud may cost more than on-prem.</td>
-                            <td>
-                                <div class="checkbox-container">
-                                    <input type="number" min="1" max="5" class="score-input rf-input" data-domain="cost">
-                                    <label><input type="checkbox" class="rf-cb"> &le; 2 Triggered</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                <section style="margin-top: 3rem;">
+                    <h2 style="font-size: 1.6rem; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                        1. Technical Topology &amp; Architecture Coupling
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        Evaluate application state behaviors, operational network dependencies, hardware abstractions, and internal clustering properties.
+                    </p>
 
-        <section id="domain-2">
-            <h3 class="domain-title">Domain 2: Security &amp; Compliance</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>2.1</td>
-                            <td>We understand the shared responsibility model (cloud provider secures <em>the cloud</em>, we secure <em>things in the cloud</em>) and have staff who can manage OS, application, and data security.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="security"></td>
-                        </tr>
-                        <tr>
-                            <td>2.2</td>
-                            <td>Our industry compliance requirements (GDPR, HIPAA, PCI-DSS, SOC, FedRAMP, etc.) have existing cloud provider attestations and regional data residency options.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="security"></td>
-                        </tr>
-                        <tr>
-                            <td>2.3</td>
-                            <td>We have the ability to implement identity and access management (IAM) with least privilege, multi-factor authentication (MFA), and centralized logging across cloud resources.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="security"></td>
-                        </tr>
-                        <tr>
-                            <td>2.4</td>
-                            <td>Our current security tooling (firewalls, IDS/IPS, SIEM) can integrate with cloud APIs or we are willing to adopt cloud-native equivalents (e.g., AWS GuardDuty, Security Hub).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="security"></td>
-                        </tr>
-                        <tr>
-                            <td>2.5</td>
-                            <td>We have no legal or contractual prohibitions against storing certain data types (e.g., state secrets, certain health records) on public cloud infrastructure.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="security"></td>
-                        </tr>
-                        <tr class="red-flag-row">
-                            <td>2.6</td>
-                            <td><span class="red-flag-badge">Red Flag</span> <em>Risk Factor:</em> We cannot achieve required encryption key management (bring your own key, HSM, or cloud KMS) or audit logging for compliance.</td>
-                            <td>
-                                <div class="checkbox-container">
-                                    <input type="number" min="1" max="5" class="score-input rf-input" data-domain="security">
-                                    <label><input type="checkbox" class="rf-cb"> &le; 2 Triggered</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                    <div class="matrix-table-wrapper">
+                        <table class="matrix-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">Assessment Parameter</th>
+                                    <th style="width: 50%;">Guidance &amp; Scoring Range Criteria</th>
+                                    <th style="width: 12%; text-align: center;">Score (1-5)</th>
+                                    <th style="width: 13%; text-align: center;">Hard Block?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>State Management &amp; Coupling</strong></td>
+                                    <td><strong>1:</strong> Local file-system sticky states, local multi-GB disk caching constraints.<br><strong>3:</strong> Hybrid session affinity states requiring specialized network setups.<br><strong>5:</strong> 100% Stateless logic. Independent horizontal execution modules.</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat1-input" value="4"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Network Latency Tolerance</strong></td>
+                                    <td><strong>1:</strong> High-frequency synchronous database chatter (&lt; 2ms strict limits).<br><strong>3:</strong> Mixed chatty workflows tolerant of minor network boundary crossing delay.<br><strong>5:</strong> Fully asynchronous pub/sub messaging queues or decoupled event structures.</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat1-input" value="3"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hardware OS Customization</strong></td>
+                                    <td><strong>1:</strong> Specialized AIX kernel extensions, legacy mainframes, hardware dongles.<br><strong>3:</strong> Hardcoded custom OS system configuration paths, unique kernel patches.<br><strong>5:</strong> Standard generic Linux container layers (x86_64 or ARM64 targets).</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat1-input" value="5"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
-        <section id="domain-3">
-            <h3 class="domain-title">Domain 3: Reliability &amp; Business Continuity</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>3.1</td>
-                            <td>Our current on-premises environment has experienced more than 2 hours of unplanned downtime in the last 12 months due to hardware failure, power, or network issues.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="reliability"></td>
-                        </tr>
-                        <tr>
-                            <td>3.2</td>
-                            <td>Our recovery time objective (RTO) and recovery point objective (RPO) requirements can be met by cloud services (e.g., multi-AZ, backup, replication).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="reliability"></td>
-                        </tr>
-                        <tr>
-                            <td>3.3</td>
-                            <td>We have workloads that would benefit from geographically distributed, fault-tolerant architecture (e.g., active-active across regions).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="reliability"></td>
-                        </tr>
-                        <tr>
-                            <td>3.4</td>
-                            <td>Our organization can tolerate the inherent network latency of accessing cloud resources from our offices (especially if workloads are latency-sensitive).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="reliability"></td>
-                        </tr>
-                        <tr>
-                            <td>3.5</td>
-                            <td>We have a disaster recovery (DR) plan that currently requires a second physical site; cloud could replace or augment that site cost-effectively.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="reliability"></td>
-                        </tr>
-                        <tr class="red-flag-row">
-                            <td>3.6</td>
-                            <td><span class="red-flag-badge">Red Flag</span> <em>Risk Factor:</em> Our workloads require single-digit millisecond latency to on-premises industrial controllers, HPC with low-latency interconnects, or real-time trading systems – public cloud may not meet it.</td>
-                            <td>
-                                <div class="checkbox-container">
-                                    <input type="number" min="1" max="5" class="score-input rf-input" data-domain="reliability">
-                                    <label><input type="checkbox" class="rf-cb"> &le; 2 Triggered</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                <section style="margin-top: 3rem;">
+                    <h2 style="font-size: 1.6rem; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                        2. Data Inventory, Gravity &amp; Lifecycle Sovereignty
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        Analyze physical footprint realities, transaction consistency demands, sync timelines, and localization restrictions.
+                    </p>
 
-        <section id="domain-4">
-            <h3 class="domain-title">Domain 4: Performance Efficiency</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>4.1</td>
-                            <td>Our applications are designed (or can be adapted) to scale horizontally (adding more instances) rather than vertically (bigger servers).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="performance"></td>
-                        </tr>
-                        <tr>
-                            <td>4.2</td>
-                            <td>We have workloads that require burstable or GPU/FPGA compute that is expensive or unavailable on-premises.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="performance"></td>
-                        </tr>
-                        <tr>
-                            <td>4.3</td>
-                            <td>Our storage and database performance needs (IOPS, throughput) align with cloud service limits (e.g., EBS, S3, RDS).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="performance"></td>
-                        </tr>
-                        <tr>
-                            <td>4.4</td>
-                            <td>We have performed load testing and know the peak resource requirements; we can leverage auto-scaling to meet demand without over-provisioning.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="performance"></td>
-                        </tr>
-                        <tr>
-                            <td>4.5</td>
-                            <td>Our network bandwidth to a cloud region (measured via latency and throughput tests) is sufficient for data transfer and real-time sync.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="performance"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                    <div class="matrix-table-wrapper">
+                        <table class="matrix-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">Assessment Parameter</th>
+                                    <th style="width: 50%;">Guidance &amp; Scoring Range Criteria</th>
+                                    <th style="width: 12%; text-align: center;">Score (1-5)</th>
+                                    <th style="width: 13%; text-align: center;">Hard Block?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Data Store Footprint</strong></td>
+                                    <td><strong>1:</strong> Single monolithic relational tables exceeding 50 Terabytes.<br><strong>3:</strong> Multi-Terabyte datasets manageable via specialized replication appliances.<br><strong>5:</strong> Modest, highly distributed transactional datastores (&lt; 500 Gigabytes total).</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat2-input" value="4"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sovereignty &amp; Regulatory Compliance</strong></td>
+                                    <td><strong>1:</strong> Rigid compliance mandates demanding physical, single-tenant isolated HSM units.<br><strong>3:</strong> Shared hosting permitted given strict encryption and dedicated KMS keys.<br><strong>5:</strong> Public data or low-risk parameters free of strict localization regulations.</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat2-input" value="3"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Change Velocity &amp; Sync Horizons</strong></td>
+                                    <td><strong>1:</strong> Massive real-time continuous writes requiring atomic transactional verification.<br><strong>3:</strong> Eventual consistency models fine with minor batch window delays.<br><strong>5:</strong> Static data pools or low-frequency batch operations easily replicated.</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat2-input" value="4"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
-        <section id="domain-5">
-            <h3 class="domain-title">Domain 5: Organizational &amp; Staff Ability</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>5.1</td>
-                            <td>Our IT staff have at least basic cloud knowledge (e.g., IaaS concepts, CLI/SDK, infrastructure as code) or are actively training.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="staff"></td>
-                        </tr>
-                        <tr>
-                            <td>5.2</td>
-                            <td>We have (or can hire) a cloud architect or DevOps engineer who understands networking, security, and automation in cloud environments.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="staff"></td>
-                        </tr>
-                        <tr>
-                            <td>5.3</td>
-                            <td>Our organizational culture embraces “you build it, you run it” and autonomous teams, rather than siloed ops and dev groups.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="staff"></td>
-                        </tr>
-                        <tr>
-                            <td>5.4</td>
-                            <td>We have budget and time for upskilling (certifications, hands-on labs) and for potential temporary productivity dips during transition.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="staff"></td>
-                        </tr>
-                        <tr>
-                            <td>5.5</td>
-                            <td>Our internal processes (change management, procurement, incident response) can adapt to cloud’s faster pace (e.g., automated deployments, ephemeral resources).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="staff"></td>
-                        </tr>
-                        <tr class="red-flag-row">
-                            <td>5.6</td>
-                            <td><span class="red-flag-badge">Red Flag</span> <em>Risk Factor:</em> Our entire infrastructure is managed by a single, long-tenured admin with no documentation or automation – cloud migration would expose severe knowledge risk.</td>
-                            <td>
-                                <div class="checkbox-container">
-                                    <input type="number" min="1" max="5" class="score-input rf-input" data-domain="staff">
-                                    <label><input type="checkbox" class="rf-cb"> &le; 2 Triggered</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                <section style="margin-top: 3rem;">
+                    <h2 style="font-size: 1.6rem; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                        3. Organizational Capability &amp; SRE Maturity
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        Evaluate internal engineering mastery of infrastructure-as-code, deployment loops, and modern automated operations.
+                    </p>
 
-        <section id="domain-6">
-            <h3 class="domain-title">Domain 6: Sustainability (Environmental Impact)</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>6.1</td>
-                            <td>Our organization has explicit sustainability goals (e.g., carbon reduction, renewable energy use) that cloud providers can help meet via their efficiency and renewables.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="sustainability"></td>
-                        </tr>
-                        <tr>
-                            <td>6.2</td>
-                            <td>We currently run our own data center with poor power usage effectiveness (PUE > 1.8) and no access to renewable energy contracts.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="sustainability"></td>
-                        </tr>
-                        <tr>
-                            <td>6.3</td>
-                            <td>We can redesign workloads to be “carbon-aware” (e.g., shifting batch jobs to regions/times with cleaner energy).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="sustainability"></td>
-                        </tr>
-                        <tr>
-                            <td>6.4</td>
-                            <td>Our hardware refresh cycles are infrequent (&ge;5 years), leading to inefficient, power-hungry servers – cloud’s newer hardware reduces energy per compute unit.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="sustainability"></td>
-                        </tr>
-                        <tr>
-                            <td>6.5</td>
-                            <td>We can schedule non-urgent batch jobs (ETL, backups, ML training) to run in cloud regions or time windows with lower carbon intensity.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="sustainability"></td>
-                        </tr>
-                        <tr>
-                            <td>6.6</td>
-                            <td>We have measured our current on-premises carbon footprint and can compare against cloud provider’s publicly disclosed intensity (e.g., AWS carbon footprint tool).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="sustainability"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                    <div class="matrix-table-wrapper">
+                        <table class="matrix-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">Assessment Parameter</th>
+                                    <th style="width: 50%;">Guidance &amp; Scoring Range Criteria</th>
+                                    <th style="width: 12%; text-align: center;">Score (1-5)</th>
+                                    <th style="width: 13%; text-align: center;">Hard Block?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Infrastructure-As-Code (IaC) Mastery</strong></td>
+                                    <td><strong>1:</strong> Manual configurations performed directly on production systems via GUI consoles or SSH access.<br><strong>3:</strong> Mixed landscape using unstructured, localized shell scripts and basic automation.<br><strong>5:</strong> 100% Declarative deployments managed via central pipelines (Terraform/OpenTofu).</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat3-input" value="2"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb" checked></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Release Management Pipeline Integration</strong></td>
+                                    <td><strong>1:</strong> Scheduled maintenance windows requiring massive multi-hour coordination meetings.<br><strong>3:</strong> Semi-automated build systems with manual approval gates and validation checks.<br><strong>5:</strong> Fully automated CI/CD engine with integrated rollbacks and traffic testing.</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat3-input" value="3"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
-        <section id="domain-7">
-            <h3 class="domain-title">Domain 7: Migration Strategy Indicators</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>7.1</td>
-                            <td>Our applications are legacy, monolithic, poorly documented, and cannot be easily modified – making them candidates for “lift &amp; shift” only.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="strategy_ind"></td>
-                        </tr>
-                        <tr>
-                            <td>7.2</td>
-                            <td>We have the development capacity and testing resources to refactor or re-architect applications to use cloud-native services (e.g., serverless, managed databases, queues).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="strategy_ind"></td>
-                        </tr>
-                        <tr>
-                            <td>7.3</td>
-                            <td>Our applications rely heavily on on-premises low-latency dependencies (e.g., manufacturing line, mainframe) that cannot move, suggesting a hybrid approach.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="strategy_ind"></td>
-                        </tr>
-                        <tr>
-                            <td>7.4</td>
-                            <td>We have a clear mapping of data gravity (large datasets > 10 TB) and can evaluate whether moving compute to data (cloud) or data to compute (hybrid) is cheaper.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="strategy_ind"></td>
-                        </tr>
-                        <tr>
-                            <td>7.5</td>
-                            <td>Our compliance or data residency laws require certain data to stay on-premises, forcing a hybrid or edge architecture.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="strategy_ind"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                <section style="margin-top: 3rem;">
+                    <h2 style="font-size: 1.6rem; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                        4. Security Controls &amp; Network Perimeter Governance
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        Review identity structures, security visibility layers, and network boundary conditions.
+                    </p>
 
-        <section id="domain-8">
-            <h3 class="domain-title">Domain 8: Transition Resources &amp; Timeline</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>8.1</td>
-                            <td>We have identified a specific pilot workload (low risk, high business value) that can be migrated first to prove cloud value.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="resources"></td>
-                        </tr>
-                        <tr>
-                            <td>8.2</td>
-                            <td>We have a dedicated migration budget covering discovery, tools (e.g., AWS Migration Evaluator, CloudEndure), partner consulting, and post-migration optimization.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="resources"></td>
-                        </tr>
-                        <tr>
-                            <td>8.3</td>
-                            <td>We have allocated internal staff time (e.g., 20-50% of relevant engineers for 3-6 months) to execute the migration without halting daily operations.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="resources"></td>
-                        </tr>
-                        <tr>
-                            <td>8.4</td>
-                            <td>We have established a Cloud Center of Excellence (CCoE) or at least a small cross-functional team with decision authority.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="resources"></td>
-                        </tr>
-                        <tr>
-                            <td>8.5</td>
-                            <td>Our existing monitoring, backup, and CMDB tools can export data to cloud or we have a parallel discovery process.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="resources"></td>
-                        </tr>
-                        <tr class="red-flag-row">
-                            <td>8.6</td>
-                            <td><span class="red-flag-badge">Red Flag</span> <em>Risk Factor:</em> We are under a critical regulatory or business deadline (e.g., data center lease ends in 3 months) with zero cloud experience – high risk of failure.</td>
-                            <td>
-                                <div class="checkbox-container">
-                                    <input type="number" min="1" max="5" class="score-input rf-input" data-domain="resources">
-                                    <label><input type="checkbox" class="rf-cb"> &le; 2 Triggered</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                    <div class="matrix-table-wrapper">
+                        <table class="matrix-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">Assessment Parameter</th>
+                                    <th style="width: 50%;">Guidance &amp; Scoring Range Criteria</th>
+                                    <th style="width: 12%; text-align: center;">Score (1-5)</th>
+                                    <th style="width: 13%; text-align: center;">Hard Block?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Identity &amp; Access Mapping (IAM)</strong></td>
+                                    <td><strong>1:</strong> Shared admin accounts, static credentials baked inside source code repository text files.<br><strong>3:</strong> Central directory linking with basic rule grouping models.<br><strong>5:</strong> Dynamic role identity configurations based on Zero-Trust access tokens.</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat4-input" value="3"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ingress/Egress Routing Control</strong></td>
+                                    <td><strong>1:</strong> Hardcoded private IP structures spread across non-routable internal domains.<br><strong>3:</strong> Classic edge perimeter defense models mapping via simple firewall rules.<br><strong>5:</strong> Policy-driven software-defined networking layouts with dynamic segmentation.</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat4-input" value="4"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
-        <section id="domain-9">
-            <h3 class="domain-title">Domain 9: Hybrid vs. Full Migration &amp; Refactoring Depth</h3>
-            <p style="font-style: italic; color: var(--text-secondary); margin-bottom: 1rem;">(Qualitative Structural Evaluation – Answer post numerical assessment)</p>
-            
-            <label><strong>9.1 Which workloads are truly “cloud-native ready”?</strong> (Microservices, stateless configurations, active CI/CD pipelines)</label>
-            <textarea class="qualitative-textbox" placeholder="Enter workload identities here..."></textarea>
+                <section style="margin-top: 3rem;">
+                    <h2 style="font-size: 1.6rem; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                        5. Financial Realities &amp; Proprietary Licensing
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        Analyze current software contract liabilities and resource efficiency scaling behaviors.
+                    </p>
 
-            <label><strong>9.2 Which workloads have compliance / latency / data gravity constraints forcing on-premises retention?</strong> (Requires AWS Outposts, Edge, etc.)</label>
-            <textarea class="qualitative-textbox" placeholder="Enter constrained asset classes..."></textarea>
+                    <div class="matrix-table-wrapper">
+                        <table class="matrix-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">Assessment Parameter</th>
+                                    <th style="width: 50%;">Guidance &amp; Scoring Range Criteria</th>
+                                    <th style="width: 12%; text-align: center;">Score (1-5)</th>
+                                    <th style="width: 13%; text-align: center;">Hard Block?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Vendor Licensing Constraints</strong></td>
+                                    <td><strong>1:</strong> Rigid contracts tying cost to physical sockets or specific hardware components.<br><strong>3:</strong> BYOL options supported but requiring specialized tracking models.<br><strong>5:</strong> Open-source engines or modern cloud-native consumption structures.</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat5-input" value="2"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Resource Consumption Elasticity</strong></td>
+                                    <td><strong>1:</strong> Static baseline workloads running 24/7 with zero scaling variation options.<br><strong>3:</strong> Cyclical operational patterns predictable enough for scheduled adjustments.<br><strong>5:</strong> Highly dynamic, spike-driven request profiles capitalizing on automated scaling.</td>
+                                    <td style="text-align: center;"><input type="number" min="1" max="5" class="score-input cat5-input" value="4"></td>
+                                    <td style="text-align: center;"><input type="checkbox" class="rf-cb"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
-            <label><strong>9.3 Which workloads are currently running on expensive, end-of-life hardware with no vendor support?</strong> (Primary cloud lift candidates)</label>
-            <textarea class="qualitative-textbox" placeholder="Enter EOL hardware nodes..."></textarea>
+                <button class="eval-btn" onclick="executeTransformationAnalysis()">
+                    Compile Diagnostic Telemetry &rarr;
+                </button>
 
-            <label><strong>9.4 Do you have a well-documented infrastructure as code (Terraform, CloudFormation) capability?</strong></label>
-            <textarea class="qualitative-textbox" placeholder="Describe current state configuration management tooling..."></textarea>
+                <hr id="results-anchor" style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
 
-            <label><strong>9.5 What is your structural tolerance for architectural change during active migration waves?</strong></label>
-            <textarea class="qualitative-textbox" placeholder="Low (Rehost) | Medium (Replatform) | High (Refactor)"></textarea>
-        </section>
+                <section style="margin-top: 2rem; margin-bottom: 4rem;">
+                    <h2>Transformation Strategy Dashboard Output</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        This automated telemetry matrix compiles your system scores into actionable strategic directions.
+                    </p>
 
-        <section id="domain-10">
-            <h3 class="domain-title">Domain 10: Application Portfolio &amp; Dependency Mapping</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>10.1</td>
-                            <td>We have an up-to-date application dependency map showing inter-app communication, database connections, message queues, and file shares.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="dependencies"></td>
-                        </tr>
-                        <tr>
-                            <td>10.2</td>
-                            <td>We have identified “tiger teams” of applications with circular dependencies or hard-coded IP addresses that would break in a cloud environment.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="dependencies"></td>
-                        </tr>
-                        <tr>
-                            <td>10.3</td>
-                            <td>We have classified each application by business criticality (tier 1-4) and can prioritize migration order accordingly.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="dependencies"></td>
-                        </tr>
-                        <tr>
-                            <td>10.4</td>
-                            <td>We understand which applications share stateful data (e.g., same on-prem SAN volume) and cannot be migrated separately without refactoring.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="dependencies"></td>
-                        </tr>
-                        <tr>
-                            <td>10.5</td>
-                            <td>We have tested network latency and bandwidth between our on-prem estate and target cloud region for each major application cluster.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="dependencies"></td>
-                        </tr>
-                        <tr class="red-flag-row">
-                            <td>10.6</td>
-                            <td><span class="red-flag-badge">Red Flag</span> <em>Risk Factor:</em> Any mission-critical application has no documented owner or is running on undocumented, legacy hardware with no staging environment.</td>
-                            <td>
-                                <div class="checkbox-container">
-                                    <input type="number" min="1" max="5" class="score-input rf-input" data-domain="dependencies">
-                                    <label><input type="checkbox" class="rf-cb"> &le; 2 Triggered</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                    <div class="dashboard-grid">
+                        <div class="dash-card">
+                            <h4>Overall Suitability</h4>
+                            <div class="dash-metric" id="dash-score-overall">--</div>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">Normalized Metric (Max 5.0)</p>
+                        </div>
+                        <div class="dash-card">
+                            <h4>Execution Archetype</h4>
+                            <div style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin: 1.2rem 0;" id="dash-archetype-label">PENDING</div>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">Recommended Wave Strategy</p>
+                        </div>
+                        <div class="dash-card">
+                            <h4>Risk Classification</h4>
+                            <div style="margin: 1rem 0;" id="dash-status-overall">--</div>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);">Red Flag Guard Check</p>
+                        </div>
+                    </div>
 
-        <section id="domain-11">
-            <h3 class="domain-title">Domain 11: Data Transfer &amp; Egress Costs</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>11.1</td>
-                            <td>We have modeled the monthly data transfer volume from cloud to internet, cloud to on-prem (hybrid), and cloud to cloud/other regions.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="egress"></td>
-                        </tr>
-                        <tr>
-                            <td>11.2</td>
-                            <td>Our workloads are not “data warehouse” or “analytics” jobs that regularly export terabytes to third-party tools (high egress risk).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="egress"></td>
-                        </tr>
-                        <tr>
-                            <td>11.3</td>
-                            <td>We can use content delivery networks (CDN) or private interconnects (Direct Connect, ExpressRoute) to reduce egress costs for external users.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="egress"></td>
-                        </tr>
-                        <tr>
-                            <td>11.4</td>
-                            <td>We have identified data sets that could remain on-prem with compute in cloud (e.g., using cloud VMs with on-prem storage via high-speed link) to avoid data movement costs.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="egress"></td>
-                        </tr>
-                        <tr class="red-flag-row">
-                            <td>11.5</td>
-                            <td><span class="red-flag-badge">Red Flag</span> <em>Risk Factor:</em> Our users are globally distributed and we have no CDN; cloud egress would exceed compute savings.</td>
-                            <td>
-                                <div class="checkbox-container">
-                                    <input type="number" min="1" max="5" class="score-input rf-input" data-domain="egress">
-                                    <label><input type="checkbox" class="rf-cb"> &le; 2 Triggered</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                    <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 0.5rem; margin-top: 1.5rem;">
+                        <h4 style="margin-top: 0; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                            Architect Blueprint Directive:
+                        </h4>
+                        <p id="dash-action-overall" style="font-size: 1.1rem; color: var(--text-primary); font-weight: 600; line-height: 1.5;">
+                            Provide input matrix evaluation scores above and execute analysis to view your directive.
+                        </p>
 
-        <section id="domain-12">
-            <h3 class="domain-title">Domain 12: Operational Model &amp; Cloud FinOps</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>12.1</td>
-                            <td>We have a designated Cloud FinOps role or team responsible for cost visibility, anomaly detection, and reserved instance/savings plan purchasing.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="finops"></td>
-                        </tr>
-                        <tr>
-                            <td>12.2</td>
-                            <td>We can implement real-time budget alerts and automated shutdown policies for non-production environments (e.g., dev/test off-hours).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="finops"></td>
-                        </tr>
-                        <tr>
-                            <td>12.3</td>
-                            <td>Our incident response and patch management processes can handle ephemeral, auto-scaling infrastructure (e.g., immutable images instead of patching running servers).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="finops"></td>
-                        </tr>
-                        <tr>
-                            <td>12.4</td>
-                            <td>We have a tagging strategy (e.g., cost center, environment, application, owner) enforced at deployment time via policy-as-code.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="finops"></td>
-                        </tr>
-                        <tr>
-                            <td>12.5</td>
-                            <td>We are prepared for cloud provider billing surprises (e.g., data transfer, API calls, NAT gateway, log ingestion) and have monitoring dashboards.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="finops"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                        <div style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                            <strong>Category Breakdown Indices:</strong>
+                            <span id="breakdown-metrics" style="font-family: monospace; margin-left: 0.5rem; color: var(--accent-color);"></span>
+                        </div>
+                    </div>
+                </section>
+            </main>
 
-        <section id="domain-13">
-            <h3 class="domain-title">Domain 13: Vendor Lock-in &amp; Exit Strategy</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>13.1</td>
-                            <td>Our architecture avoids proprietary cloud services where open-source alternatives exist (e.g., Kubernetes instead of Fargate, PostgreSQL instead of DynamoDB) unless the lock-in is justified.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="lockin"></td>
-                        </tr>
-                        <tr>
-                            <td>13.2</td>
-                            <td>We have documented which cloud-native services (e.g., SQS, Lambda, CloudFront) would be costly or impossible to migrate away from.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="lockin"></td>
-                        </tr>
-                        <tr>
-                            <td>13.3</td>
-                            <td>We have a backup and restore process that can extract all data and configuration in a portable format (e.g., SQL dumps, Terraform state) at least quarterly.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="lockin"></td>
-                        </tr>
-                        <tr>
-                            <td>13.4</td>
-                            <td>Our contracts with the cloud provider include data portability rights and reasonable egress fee caps for exit scenarios.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="lockin"></td>
-                        </tr>
-                        <tr class="red-flag-row">
-                            <td>13.5</td>
-                            <td><span class="red-flag-badge">Red Flag</span> <em>Risk Factor:</em> We are migrating a 10-year-old Oracle database to RDS Oracle with no plan for future portability – vendor lock-in is severe.</td>
-                            <td>
-                                <div class="checkbox-container">
-                                    <input type="number" min="1" max="5" class="score-input rf-input" data-domain="lockin">
-                                    <label><input type="checkbox" class="rf-cb"> &le; 2 Triggered</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="domain-14">
-            <h3 class="domain-title">Domain 14: Compliance &amp; Audit Evidence Collection</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>14.1</td>
-                            <td>We can generate automated, timestamped compliance evidence (e.g., CloudTrail logs, Config rules, VPC flow logs) for auditors without manual screenshots.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="audit"></td>
-                        </tr>
-                        <tr>
-                            <td>14.2</td>
-                            <td>Our cloud environment can be logically isolated (e.g., separate AWS account or Azure subscription per compliance boundary) to simplify audits.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="audit"></td>
-                        </tr>
-                        <tr>
-                            <td>14.3</td>
-                            <td>We have validated that our cloud provider’s region selection (e.g., AWS GovCloud, Azure Germany) matches our data sovereignty laws.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="audit"></td>
-                        </tr>
-                        <tr>
-                            <td>14.4</td>
-                            <td>We have a plan for long-term log retention (1–7+ years) that includes tamper-proof storage (e.g., Object Lock, immutable buckets).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="audit"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="domain-15">
-            <h3 class="domain-title">Domain 15: Migration Testing &amp; Rollback Plan</h3>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>15.1</td>
-                            <td>We have a staging environment identical to production to test the migrated workload before cutover.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="rollback"></td>
-                        </tr>
-                        <tr>
-                            <td>15.2</td>
-                            <td>We have a documented, rehearsed rollback plan for each migration wave, with a maximum tolerated cutover time (e.g., 4-hour rollback window).</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="rollback"></td>
-                        </tr>
-                        <tr>
-                            <td>15.3</td>
-                            <td>We can run both on-prem and cloud environments in parallel (dual-run) for a period to validate data consistency and performance.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="rollback"></td>
-                        </tr>
-                        <tr>
-                            <td>15.4</td>
-                            <td>Our CI/CD pipeline supports blue/green or canary deployments to the cloud target.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="rollback"></td>
-                        </tr>
-                        <tr class="red-flag-row">
-                            <td>15.5</td>
-                            <td><span class="red-flag-badge">Red Flag</span> <em>Risk Factor:</em> We have no ability to roll back to on-prem after migration due to hardware decommissioning or lease expiry without a buffer period.</td>
-                            <td>
-                                <div class="checkbox-container">
-                                    <input type="number" min="1" max="5" class="score-input rf-input" data-domain="rollback">
-                                    <label><input type="checkbox" class="rf-cb"> &le; 2 Triggered</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="domain-16">
-            <h3 class="domain-title">Domain 16: Hybrid / Multi-Cloud Operations Complexity</h3>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; font-style: italic;">
-                (Conditional Module: Mandatory only if indicators from Domain 7.3 or 7.5 reflect scores &ge; 4)
-            </p>
-            <div class="excel-table-wrapper">
-                <table class="excel-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">#</th>
-                            <th>Question Baseline Requirement</th>
-                            <th style="width: 20%;">Score (1-5)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>16.1</td>
-                            <td>We have a unified identity provider (e.g., Azure AD, Okta) that works across on-prem and cloud.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="hybrid"></td>
-                        </tr>
-                        <tr>
-                            <td>16.2</td>
-                            <td>We can manage networking (VPN, Direct Connect, routing, firewalls) that spans on-prem and multiple cloud VPCs without performance degradation.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="hybrid"></td>
-                        </tr>
-                        <tr>
-                            <td>16.3</td>
-                            <td>Our monitoring and alerting system (e.g., Datadog, Prometheus, CloudWatch) aggregates metrics from both environments seamlessly.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="hybrid"></td>
-                        </tr>
-                        <tr>
-                            <td>16.4</td>
-                            <td>We have budget for cross-cloud data transfer if we use multiple cloud providers for different workloads.</td>
-                            <td><input type="number" min="1" max="5" class="score-input" data-domain="hybrid"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <div class="calc-btn-container">
-            <button type="button" class="calc-btn" onclick="evaluateCloudStrategy()">Execute Mathematical Triage Strategy Analysis</button>
         </div>
-
-        <h2 class="doc-section-title" id="results-anchor">SCORING &amp; DECISION MATRIX</h2>
-        
-        <h3>Step 1 &amp; 2: Average Scores per Domain &amp; Interpretations</h3>
-        <p>Averages are evaluated as: <strong style="color:#4ade80;">4.0–5.0 (Strong Enabler)</strong> | <strong style="color:#facc15;">2.5–3.9 (Acceptable/Mitigation required)</strong> | <strong style="color:#f87171;">1.0–2.4 (Critical Blocker)</strong>.</p>
-        
-        <div class="excel-table-wrapper">
-            <table class="excel-table">
-                <thead>
-                    <tr>
-                        <th>Domain Segment</th>
-                        <th style="width: 25%;">Calculated Average</th>
-                        <th style="width: 25%;">Status Flag</th>
-                    </tr>
-                </thead>
-                <tbody id="matrix-output-body">
-                    <tr><td>1: Cost Optimization &amp; Financial Readiness</td><td><span id="avg-cost">-</span></td><td><span id="status-cost">-</span></td></tr>
-                    <tr><td>2: Security &amp; Compliance</td><td><span id="avg-security">-</span></td><td><span id="status-security">-</span></td></tr>
-                    <tr><td>3: Reliability &amp; Business Continuity</td><td><span id="avg-reliability">-</span></td><td><span id="status-reliability">-</span></td></tr>
-                    <tr><td>4: Performance Efficiency</td><td><span id="avg-performance">-</span></td><td><span id="status-performance">-</span></td></tr>
-                    <tr><td>5: Organizational &amp; Staff Ability</td><td><span id="avg-staff">-</span></td><td><span id="status-staff">-</span></td></tr>
-                    <tr><td>6: Sustainability (Environmental Impact)</td><td><span id="avg-sustainability">-</span></td><td><span id="status-sustainability">-</span></td></tr>
-                    <tr><td>7: Migration Strategy Indicators</td><td><span id="avg-strategy_ind">-</span></td><td><span id="status-strategy_ind">-</span></td></tr>
-                    <tr><td>8: Transition Resources &amp; Timeline</td><td><span id="avg-resources">-</span></td><td><span id="status-resources">-</span></td></tr>
-                    <tr><td>10: Application Portfolio &amp; Dependency Mapping</td><td><span id="avg-dependencies">-</span></td><td><span id="status-dependencies">-</span></td></tr>
-                    <tr><td>11: Data Transfer &amp; Egress Costs</td><td><span id="avg-egress">-</span></td><td><span id="status-egress">-</span></td></tr>
-                    <tr><td>12: Operational Model &amp; Cloud FinOps</td><td><span id="avg-finops">-</span></td><td><span id="status-finops">-</span></td></tr>
-                    <tr><td>13: Vendor Lock-in &amp; Exit Strategy</td><td><span id="avg-lockin">-</span></td><td><span id="status-lockin">-</span></td></tr>
-                    <tr><td>14: Compliance &amp; Audit Evidence Collection</td><td><span id="avg-audit">-</span></td><td><span id="status-audit">-</span></td></tr>
-                    <tr><td>15: Migration Testing &amp; Rollback Plan</td><td><span id="avg-rollback">-</span></td><td><span id="status-rollback">-</span></td></tr>
-                    <tr><td>16: Hybrid Operations Complexity (If scored)</td><td><span id="avg-hybrid">-</span></td><td><span id="status-hybrid">-</span></td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h3>Step 3: Overall Cloud Suitability Guidance Matrix</h3>
-        <div class="excel-table-wrapper">
-            <table class="excel-table">
-                <thead>
-                    <tr>
-                        <th style="width: 40%;">Condition Formula</th>
-                        <th>Strategic Transformation Recommendation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>No domain below 2.5 AND at least three domains above 4.0</strong></td>
-                        <td><span class="status-badge status-green">🟢 Proceed with Full Cloud Migration</span> (All workloads not explicitly latency/compliance constrained).</td>
-                    </tr>
-                    <tr>
-                        <td><strong>One or two domains below 2.5 BUT they are remediable</strong></td>
-                        <td><span class="status-badge status-yellow">🟡 Phased Migration Execution</span> – Start immediately with pilot asset class, build dedicated mitigation sprint loops for gap spaces.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Any domain with score 1.0 – 1.5 OR two+ red flags flagged</strong></td>
-                        <td><span class="status-badge status-red">🔴 Halt Migration Discovery</span> – Retain core architecture footprints on-premises or deploy strictly isolated non-critical hybrid targets.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Security or Compliance domain &lt; 2.0</strong></td>
-                        <td><span class="status-badge status-red">❌ Absolute Block</span> – Infrastructure unsuitable for public tiering. Retain on-premises or invest in fully sovereign engineering stacks.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h3>Step 4: Migration Strategy Recommendation Routing Map</h3>
-        <div class="excel-table-wrapper">
-            <table class="excel-table">
-                <thead>
-                    <tr>
-                        <th style="width: 40%;">Organizational &amp; Technical Profile Archetype</th>
-                        <th>Recommended Migration Pattern</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Low organizational change ability (5.1–5.5 avg &lt; 2.5) + legacy apps (7.1 &gt; 4)</td>
-                        <td><strong>Lift &amp; shift (rehost)</strong> to cloud IaaS, then decouple or optimize post-migration.</td>
-                    </tr>
-                    <tr>
-                        <td>Medium change ability + urgent need to minimize day-2 operations overhead</td>
-                        <td><strong>Re-platform</strong> – Swap self-managed data structures/queues for cloud-native managed entities (AWS RDS, ElastiCache).</td>
-                    </tr>
-                    <tr>
-                        <td>High change change capacity + modernized application decoupling footprints</td>
-                        <td><strong>Refactor / Re-architect</strong> – Deploy event-driven paradigms, edge serverless computing, and decoupled containers.</td>
-                    </tr>
-                    <tr>
-                        <td>Compliance or data gravity parameters pinning state on-site (7.3 or 7.5 &gt; 4)</td>
-                        <td><strong>Hybrid Migration</strong> – Compute/Stateless engines burst to cloud infrastructure; system of record/data layers remain anchored locally.</td>
-                    </tr>
-                    <tr>
-                        <td>Ultra low-latency industrial execution dependencies (3.6 Red Flag Triggered)</td>
-                        <td><strong>Hybrid Edge Deployment</strong> – Deploy AWS Outposts, Wavelength, or maintain structural bare-metal isolation.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3.5rem 0;">
-
-        <h2>Migration Pattern by Application Archetype (Qualitative Reference)</h2>
-        <div class="excel-table-wrapper">
-            <table class="excel-table">
-                <thead>
-                    <tr>
-                        <th style="width: 30%;">Application Archetype</th>
-                        <th style="width: 25%;">Recommended Pattern</th>
-                        <th>Engineering Core Rationale</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Legacy monolith with no internal source modifications accessible</td>
-                        <td><strong>Lift &amp; Shift (Rehost)</strong></td>
-                        <td>Safest structural approach; guarantees fast isolation from exiting facility timelines.</td>
-                    </tr>
-                    <tr>
-                        <td>Custom software with modular components and baseline cloud engineering fluency</td>
-                        <td><strong>Re-platform</strong></td>
-                        <td>Drops system administrative operational drag without demanding a comprehensive codebase rewrite.</td>
-                    </tr>
-                    <tr>
-                        <td>Stateless microservice-oriented nodes with active deployment loops</td>
-                        <td><strong>Refactor to K8s / Serverless</strong></td>
-                        <td>Maximizes raw utility hooks, elastic scale properties, and accurate operational efficiency goals.</td>
-                    </tr>
-                    <tr>
-                        <td>Legacy Mainframe topologies / AS-400 engines</td>
-                        <td><strong>Do NOT Migrate</strong></td>
-                        <td>High catastrophic failure profiles; introduce translation abstraction layers or maintain localization.</td>
-                    </tr>
-                    <tr>
-                        <td>Commercial Off-The-Shelf applications (COTS: SAP, Oracle EBS)</td>
-                        <td><strong>Vendor Certification Route</strong></td>
-                        <td>Strictly adhere to dedicated provider platforms (e.g., SAP on AWS) to avoid breaching software agreements.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h2>Staff Upskill Investment Required by Current Readiness</h2>
-        <div class="excel-table-wrapper">
-            <table class="excel-table">
-                <thead>
-                    <tr>
-                        <th style="width: 25%;">Avg Staff Score (5.1–5.5)</th>
-                        <th style="width: 45%;">Recommended Strategic Actions</th>
-                        <th>Estimated Alignment Window</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>4.5 – 5.0</td>
-                        <td>Minimal training delta required. Authorize immediate transition into an authoritative Cloud Center of Excellence (CCoE).</td>
-                        <td>1 Month</td>
-                    </tr>
-                    <tr>
-                        <td>3.0 – 4.4</td>
-                        <td>Deploy formal paths (AWS Skill Builder, structured labs); source minimum of one Principal Cloud Architect.</td>
-                        <td>3 - 6 Months</td>
-                    </tr>
-                    <tr>
-                        <td>1.5 – 2.9</td>
-                        <td>Partner extensively with a certified Cloud Managed Service Provider (MSP) for Phase 1. Drive parallel baseline tracks.</td>
-                        <td>6 - 12 Months</td>
-                    </tr>
-                    <tr>
-                        <td>1.0 – 1.4</td>
-                        <td><strong>Do NOT migrate.</strong> Maintain local operations or execute wholesale business engineering outsourcing.</td>
-                        <td>N/A</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3.5rem 0;">
-
-        <h2>FINAL SUMMARY &amp; RECOMMENDATIONS TEMPLATE</h2>
-        <p>Post diagnostic execution, synthesize the derived score insights into this executive report interface:</p>
-        
-        <div style="background-color: rgba(255,255,255,0.01); border: 1px dashed var(--border-color); padding: 2rem; border-radius: 0.5rem; margin: 1.5rem 0;">
-            <p><strong>Executive Summary</strong><br>
-            Based on completed diagnostic data inputs, the target business enterprise profiles as a 
-            <span style="color: var(--accent-color); font-weight: bold;">[candidate for hybrid cloud migration / candidate for full cloud migration / not suitable for cloud at this time]</span> 
-            utilizing a core strategy of <span style="color: var(--accent-color); font-weight: bold;">[lift &amp; shift / re-platform / refactor]</span>.</p>
-
-            <p><strong>Top 3 Risks Identified (Sub-2.5 Scores &amp; Tripped Red Flags):</strong><br>
-            1. <span style="font-family: monospace; color:#f87171;">[Data egress metrics unmodeled – Domain 11, Evaluated Score: ___]</span><br>
-            2. <span style="font-family: monospace; color:#f87171;">[Absent roll-back execution pipeline – Domain 15, Evaluated Score: ___]</span><br>
-            3. <span style="font-family: monospace; color:#f87171;">[Single Point of Failure Administrative Knowledge Risk – Domain 5.6 Condition Met]</span></p>
-
-            <p><strong>Strengths Identified (Aggregated Averages &gt; 4.0):</strong><br>
-            - <span style="font-family: monospace; color:#4ade80;">[Reliability &amp; Business Continuity, Core Average: ___]</span><br>
-            - <span style="font-family: monospace; color:#4ade80;">[Sustainability Carbon Intensity Mapping, Core Average: ___]</span></p>
-
-            <p><strong>Minimum Viable Cloud Governance (MVCG) Core Controls Required Pre-Migration:</strong></p>
-            <ul class="nested-checklist">
-                <li><input type="checkbox"> Cost Allocation Tagging schema automation enforcement</li>
-                <li><input type="checkbox"> Budget Anomaly Alarm threshold active alerts linked to Slack/SNS</li>
-                <li><input type="checkbox"> Root account organization hardware MFA layer initialization with break-glass runbooks</li>
-                <li><input type="checkbox"> Automated cross-region/cross-account immutable backup vault synchronization</li>
-                <li><input type="checkbox"> Automated AWS CIS Security Benchmark continuous compliance checks</li>
-            </ul>
-
-            <p><strong>Next Phase Execution Tasks:</strong></p>
-            <ol style="padding-left: 1.25rem; line-height: 1.8;">
-                <li>Provision discovery tooling <em>(AWS Migration Evaluator)</em> to validate asset topology metrics and capture highly definitive TCO run-rates.</li>
-                <li>Build an enterprise Cloud Readiness Roadmap isolating and remediating every domain yielding sub-2.5 averages.</li>
-                <li>Isolate pilot application node: <span style="text-decoration: underline;">[Insert Target Pilot Service Name]</span> to execute immediate isolated Proof of Concept validation.</li>
-            </ol>
-        </div>
-
-        <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 0.5rem; margin: 2.5rem 0;">
-            <h3 style="margin-top:0; font-size:1.15rem; color:var(--text-primary);">Authoritative Discovery &amp; Framework Assessment Tooling</h3>
-            <p style="font-size:0.95rem; margin-bottom:1rem; color:var(--text-secondary);">Leverage these native cloud services to complement this pre-qualification filter with automated runtime telemetry insights:</p>
-            <ul style="padding-left:1.25rem; font-size:0.95rem; line-height:1.7;">
-                <li style="margin-bottom:0.75rem;">
-                    <a href="https://aws.amazon.com/migration-evaluator/" target="_blank" style="color:var(--accent-color); font-weight:bold; text-decoration:none;">AWS Migration Evaluator &rarr;</a>
-                    <br><span style="color:var(--text-secondary); font-size:0.9rem;">Automates physical and virtual server resource usage audits, application grouping boundaries, and accurate cost modeling calculations to establish the definitive financial business case for AWS.</span>
-                </li>
-                <li>
-                    <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-readiness/welcome.html" target="_blank" style="color:var(--accent-color); font-weight:bold; text-decoration:none;">AWS Migration Readiness Assessment (MRA) &rarr;</a>
-                    <br><span style="color:var(--text-secondary); font-size:0.9rem;">Maps current capabilities directly against the formalized AWS Cloud Adoption Framework (AWS CAF) structures to spot system-wide process vulnerabilities across business, security, and infrastructure governance domains.</span>
-                </li>
-            </ul>
-        </div>
-
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3.5rem 0;">
-
-        <h2>APPENDIX: ONE-PAGE EXECUTIVE DASHBOARD</h2>
-        <div class="excel-table-wrapper">
-            <table class="excel-table">
-                <thead>
-                    <tr>
-                        <th>Domain Matrix Node</th>
-                        <th style="width: 20%;">Computed Score</th>
-                        <th style="width: 25%;">Status Indicator</th>
-                        <th style="width: 30%;">Strategic Action Item Required</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Cost Optimization &amp; Financial Readiness</td><td><span id="dash-score-cost">-</span></td><td><span id="dash-status-cost">-</span></td><td>Validate TCO against active asset metrics</td></tr>
-                    <tr><td>Security &amp; Compliance</td><td><span id="dash-score-security">-</span></td><td><span id="dash-status-security">-</span></td><td>Resolve key management boundaries</td></tr>
-                    <tr><td>Reliability &amp; BC</td><td><span id="dash-score-reliability">-</span></td><td><span id="dash-status-reliability">-</span></td><td>Verify RTO/RPO mapping limits</td></tr>
-                    <tr><td>Performance Efficiency</td><td><span id="dash-score-performance">-</span></td><td><span id="dash-status-performance">-</span></td><td>Optimize auto-scale horizontal design</td></tr>
-                    <tr><td>Organizational &amp; Staff</td><td><span id="dash-score-staff">-</span></td><td><span id="dash-status-staff">-</span></td><td>Initialize internal upskilling models</td></tr>
-                    <tr><td>Sustainability</td><td><span id="dash-score-sustainability">-</span></td><td><span id="dash-status-sustainability">-</span></td><td>Route batch tasks to green zones</td></tr>
-                    <tr><td>Migration Indicators</td><td><span id="dash-score-strategy_ind">-</span></td><td><span id="dash-status-strategy_ind">-</span></td><td>Establish application transformation fit</td></tr>
-                    <tr><td>Transition Resources</td><td><span id="dash-score-resources">-</span></td><td><span id="dash-status-resources">-</span></td><td>Fund discovery tooling phases</td></tr>
-                    <tr><td>App Dependency Mapping</td><td><span id="dash-score-dependencies">-</span></td><td><span id="dash-status-dependencies">-</span></td><td>Remediate legacy cross-app couplings</td></tr>
-                    <tr><td>Data Transfer &amp; Egress</td><td><span id="dash-score-egress">-</span></td><td><span id="dash-status-egress">-</span></td><td>Model data output expense layers</td></tr>
-                    <tr><td>Operational Model &amp; FinOps</td><td><span id="dash-score-finops">-</span></td><td><span id="dash-status-finops">-</span></td><td>Stand up cost alerting automation</td></tr>
-                    <tr><td>Vendor Lock-in</td><td><span id="dash-score-lockin">-</span></td><td><span id="dash-status-lockin">-</span></td><td>Build out data portability procedures</td></tr>
-                    <tr><td>Audit &amp; Compliance Evidence</td><td><span id="dash-score-audit">-</span></td><td><span id="dash-status-audit">-</span></td><td>Automate evidence pipeline auditing</td></tr>
-                    <tr><td>Testing &amp; Rollback</td><td><span id="dash-score-rollback">-</span></td><td><span id="dash-status-rollback">-</span></td><td>Rehearse failure isolation rollbacks</td></tr>
-                    <tr><td>Hybrid Complexity (Optional)</td><td><span id="dash-score-hybrid">-</span></td><td><span id="dash-status-hybrid">-</span></td><td>Consolidate central Identity provider</td></tr>
-                    <tr style="background-color: rgba(255,255,255,0.03); font-weight: bold; border-top: 2px solid var(--border-color);">
-                        <td>OVERALL READINESS PROFILE</td>
-                        <td><span id="dash-score-overall">-</span></td>
-                        <td><span id="dash-status-overall">-</span></td>
-                        <td><span id="dash-action-overall">Awaiting Strategy Analysis Run</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <p class="architect-blockquote" style="font-size: 0.9rem;">
-            <strong>Architect's Final Closing Directive:</strong> This tool completely replaces guesswork with programmatic, quantitative evidence. However, no diagnostic matrix removes the practical need for deep discovery tooling automation. Treat this as your primary strategic pre-qualification gate check. If your evaluation patterns reveal three or more active red-flag triggers, halt further operations immediately and focus explicitly on gap remediation sprints before releasing financial capital to cloud resources.
-        </p>
-
-        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 1rem; display: flex; justify-content: space-between;">
-            <span><strong>Document Version:</strong> 2.0 (Architect Level Matrix)</span>
-            <span><strong>Last Updated:</strong> 2026-05-19</span>
-        </div>
-    </main>
+    </div>
 
     <footer>
-        <div class="container" style="text-align: center; padding: 2rem 0; font-size: 0.85rem; color: var(--text-secondary);">
-            <p>&copy; 2026 SRE Concepts. Built with a focus on high-availability architectures and infrastructure observability.</p>
+        <div class="container" style="text-align: center; padding: 2rem 0; font-size: 0.85rem; color: var(--text-secondary); border-top: 1px solid var(--border-color);">
+            <p>&copy; 2026 SRE Concepts. Built to support high-availability platform architectures and modern observability culture.</p>
         </div>
     </footer>
 
     <script>
-        function evaluateCloudStrategy() {
-            const domains = ['cost', 'security', 'reliability', 'performance', 'staff', 'sustainability', 'strategy_ind', 'resources', 'dependencies', 'egress', 'finops', 'lockin', 'audit', 'rollback', 'hybrid'];
-            let totalScoreSum = 0;
-            let totalScoredDomainsCount = 0;
-            let totalRedFlagsActive = 0;
-            let criticalBlockerFound = false;
+        function executeTransformationAnalysis() {
+            // Gather element collection targets safely
+            const c1Inputs = document.querySelectorAll('.cat1-input');
+            const c2Inputs = document.querySelectorAll('.cat2-input');
+            const c3Inputs = document.querySelectorAll('.cat3-input');
+            const c4Inputs = document.querySelectorAll('.cat4-input');
+            const c5Inputs = document.querySelectorAll('.cat5-input');
+            const allInputs = document.querySelectorAll('.score-input');
+            const checkBoxes = document.querySelectorAll('.rf-cb');
 
-            domains.forEach(domain => {
-                const inputs = document.querySelectorAll(`input[data-domain="${domain}"]`);
-                if (inputs.length === 0) return;
+            let totalAccumulator = 0;
+            let validElementCounter = 0;
+            let explicitRedFlagTripped = false;
 
-                let domainSum = 0;
-                let domainCount = 0;
+            // Compute standalone specific category dimensional trends
+            const computeAverage = (nodeList) => {
+                let sum = 0;
+                nodeList.forEach(input => sum += parseFloat(input.value || 0));
+                return nodeList.length ? (sum / nodeList.length).toFixed(2) : 0;
+            };
 
-                inputs.forEach(input => {
-                    let val = parseInt(input.value);
-                    if (!isNaN(val)) {
-                        // Clamp value between 1 and 5
-                        if (val < 1) val = 1;
-                        if (val > 5) val = 5;
-                        input.value = val; // Reflect clean values back to inputs
+            const avgC1 = computeAverage(c1Inputs);
+            const avgC2 = computeAverage(c2Inputs);
+            const avgC3 = computeAverage(c3Inputs);
+            const avgC4 = computeAverage(c4Inputs);
+            const avgC5 = computeAverage(c5Inputs);
 
-                        domainSum += val;
-                        domainCount++;
-
-                        // Automatic Red Flag Tripping logic for inputs marked with the rf-input class
-                        if (input.classList.contains('rf-input') && val <= 2) {
-                            totalRedFlagsActive++;
-                            const parentRow = input.closest('tr');
-                            if (parentRow) {
-                                const cb = parentRow.querySelector('.rf-cb');
-                                if (cb) cb.checked = true;
-                            }
-                        }
-                    }
-                });
-
-                // If inputs were populated for this specific domain row, compute details
-                if (domainCount > 0) {
-                    const avg = parseFloat((domainSum / domainCount).toFixed(2));
-                    totalScoreSum += avg;
-                    totalScoredDomainsCount++;
-
-                    // Update UI Scores
-                    document.getElementById(`avg-${domain}`).innerText = avg;
-                    document.getElementById(`dash-score-day-${domain}`) ? document.getElementById(`dash-score-day-${domain}`).innerText = avg : null;
-                    document.getElementById(`dash-score-${domain}`).innerText = avg;
-
-                    // Set Status Badge Classes
-                    let statusText = '';
-                    let badgeClass = '';
-
-                    if (avg >= 4.0) {
-                        statusText = '🟢 Enabler';
-                        badgeClass = 'status-badge status-green';
-                    } else if (avg >= 2.5) {
-                        statusText = '🟡 Acceptable';
-                        badgeClass = 'status-badge status-yellow';
-                    } else {
-                        statusText = '🔴 Blocker';
-                        badgeClass = 'status-badge status-red';
-                        if (domain !== 'hybrid' && domain !== 'strategy_ind') {
-                            criticalBlockerFound = true;
-                        }
-                    }
-
-                    // Display Status Flags
-                    const statusCell = document.getElementById(`status-${domain}`);
-                    statusCell.innerHTML = `<span class="${badgeClass}">${statusText}</span>`;
-                    
-                    const dashStatusCell = document.getElementById(`dash-status-${domain}`);
-                    dashStatusCell.innerHTML = `<span class="${badgeClass}">${statusText}</span>`;
-                } else {
-                    // Set default empty state representation
-                    document.getElementById(`avg-${domain}`).innerText = '-';
-                    document.getElementById(`status-${domain}`).innerText = '-';
-                    document.getElementById(`dash-score-${domain}`).innerText = '-';
-                    document.getElementById(`dash-status-${domain}`).innerText = '-';
+            // Audit local elements for score boundary flags
+            allInputs.forEach(input => {
+                const numericalVal = parseFloat(input.value || 0);
+                totalAccumulator += numericalVal;
+                validElementCounter++;
+                if (numericalVal <= 2) {
+                    explicitRedFlagTripped = true;
                 }
             });
 
-            // Evaluate Overall Master Roll-up Indicators
-            if (totalScoredDomainsCount > 0) {
-                const globalReadinessAvg = parseFloat((totalScoreSum / totalScoredDomainsCount).toFixed(2));
-                document.getElementById('dash-score-overall').innerText = globalReadinessAvg;
+            // Audit custom checkbox selections for active blockades
+            checkBoxes.forEach(cb => {
+                if (cb.checked) {
+                    explicitRedFlagTripped = true;
+                }
+            });
 
-                let finalStatusText = '';
-                let finalBadgeClass = '';
+            if (validElementCounter > 0) {
+                const compoundIndex = (totalAccumulator / validElementCounter);
+                document.getElementById('dash-score-overall').innerText = compoundIndex.toFixed(2);
+                
+                // Format summary analytics tags
+                document.getElementById('breakdown-metrics').innerText = 
+                    `[Tech Topology: ${avgC1} | Data: ${avgC2} | Org Capacity: ${avgC3} | Security: ${avgC4} | Fin: ${avgC5}]`;
+
+                // Archetype Strategy Rules engine execution paths
+                let strategicArchetype = 'REPLATFORM (WAVE 2)';
                 let finalActionDirective = '';
 
-                // Isolate explicit security domain data specifically for compliance check routing
-                const securityInputCheck = parseFloat(document.getElementById('avg-security').innerText);
+                if (compoundIndex >= 4.2) {
+                    strategicArchetype = 'RE-ARCHITECT / NATIVE (WAVE 1)';
+                } else if (compoundIndex >= 3.2) {
+                    strategicArchetype = 'REPLATFORM (WAVE 2)';
+                } else if (compoundIndex >= 2.3) {
+                    strategicArchetype = 'REHOST / LIFT-AND-SHIFT (WAVE 3)';
+                } else {
+                    strategicArchetype = 'RETAIN / DEFER DEPLOYMENT';
+                }
+                
+                document.getElementById('dash-archetype-label').innerText = strategicArchetype;
 
-                if (!isNaN(securityInputCheck) && securityInputCheck < 2.0) {
-                    finalStatusText = '🔴 CRITICAL BLOCK';
+                // Status layout execution paths evaluating safety boundaries
+                let finalStatusText = '🟢 SAFE WAVE PATH';
+                let finalBadgeClass = 'status-badge status-green';
+                finalActionDirective = 'Initialize formal cloud migration wave mapping. Kick off POC pilot applications.';
+
+                if (explicitRedFlagTripped) {
+                    finalStatusText = '🔴 BLOCKED BY SAFETY GUARD';
                     finalBadgeClass = 'status-badge status-red';
-                    finalActionDirective = 'STOP: Security model compliance failure. Remediate security infrastructure layers on-site.';
-                } else if (criticalBlockerFound || totalRedFlagsActive >= 2) {
-                    finalStatusText = '🔴 HALT DISCOVERY';
-                    finalBadgeClass = 'status-badge status-red';
-                    finalActionDirective = 'Halt cloud roadmap. Retain localized infrastructure or target low-risk non-prod tiers.';
-                } else if (globalReadinessAvg >= 4.0) {
-                    finalStatusText = '🟢 READY TO PROCEED';
+                    finalActionDirective = 'Migration execution suspended. Remediate isolated technical red flags and sub-2.0 parameter barriers before scheduling transition plans.';
+                } else if (compoundIndex >= 3.5) {
+                    finalStatusText = '🟢 SAFE WAVE PATH';
                     finalBadgeClass = 'status-badge status-green';
                     finalActionDirective = 'Initialize formal cloud migration wave mapping. Kick off POC pilot applications.';
                 } else {
@@ -1442,6 +674,6 @@
             });
         });
     </script>
-    <script src="js/script.js"></script>
+    <script src=\"js/script.js\"></script>
 </body>
 </html>

@@ -8,11 +8,74 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
+        /* Two-column layout configuration matching index.html structural patterns */
+        .page-layout-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            align-items: flex-start;
+        }
+
+        /* Sticky Left Sidebar Panel matching index.html top-left-sidebar rules */
+        .left-sidebar {
+            flex: 1;
+            min-width: 280px;
+            max-width: 340px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 2rem;
+        }
+
+        .left-sidebar h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .sidebar-panel-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-panel-links li {
+            margin-bottom: 0.85rem;
+        }
+
+        .sidebar-panel-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: block;
+            line-height: 1.4;
+        }
+
+        .sidebar-panel-links a:hover {
+            color: var(--accent-color);
+            transform: translateX(4px);
+        }
+
+        /* Main Content Container wrapper within the layout grid */
+        .obs-main-content {
+            flex: 3;
+            min-width: 320px;
+        }
+
         .obs-container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
+
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -64,6 +127,19 @@
             word-break: break-all;
             font-size: 0.85rem;
         }
+
+        /* Responsive Fallback Configuration */
+        @media (max-width: 991px) {
+            .left-sidebar {
+                max-width: 100%;
+                flex: 1 1 100%;
+                position: static;
+                margin-bottom: 2rem;
+            }
+            .obs-main-content {
+                flex: 1 1 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -89,172 +165,169 @@
         </div>
     </header>
 
-    <main class="container obs-container">
-        <h1>Monitoring & Observability Frameworks</h1>
-        <p class="lead" style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem;">
-            Observability measures how well you can infer the internal states of a production ecosystem solely from its external outputs—metrics, logs, and distributed traces. Discover the engineering standards that drive data-driven visibility.
-        </p>
-
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 2rem 0;">
-
-        <section id="golden-signals">
-            <h2>1. The Four Golden Signals (Google SRE Framework)</h2>
-            <p>
-                Originally formalized within the Google Site Reliability Engineering Handbook, tracking these four foundational dimensions ensures comprehensive visibility into user-facing and systemic performance anomalies.
-            </p>
+    <div class="container obs-container">
+        <div class="page-layout-container">
             
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <h4>Latency</h4>
-                    <p>The time taken to service a request. It is critical to differentiate between the latency of successful requests versus failed requests to prevent masking real bottlenecks.</p>
-                </div>
-                <div class="metric-card">
-                    <h4>Traffic</h4>
-                    <p>A measure of how much demand is being placed on your system, measured via high-level architecture metrics such as HTTP requests per second or concurrent database connections.</p>
-                </div>
-                <div class="metric-card">
-                    <h4>Errors</h4>
-                    <p>The rate of requests that fail, either explicitly (e.g., HTTP 500 internal server errors) or implicitly (e.g., an HTTP 200 success response containing unexpected or broken payloads).</p>
-                </div>
-                <div class="metric-card">
-                    <h4>Saturation</h4>
-                    <p>A measure of how "full" your system service footprint is. This highlights the most constrained infrastructure layers, such as memory consumption limits or disk I/O utility spikes.</p>
-                </div>
-            </div>
-        </section>
+            <nav class="left-sidebar" aria-label="SRE Concepts Left Side Navigation">
+                <h3>SRE Core Concepts:</h3>
+                <ul class="sidebar-panel-links">
+                    <li><a href="core-metrics.html">1. Core Reliability Metrics &rarr;</a></li>
+                    <li><a href="observability.html">2. Monitoring & Observability &rarr;</a></li>
+                    <li><a href="error-budgets.html">3. Error Budgets &rarr;</a></li>
+                    <li><a href="incident-response.html">4. Incident Response & Triage &rarr;</a></li>
+                    <li><a href="blameless-postmortems.html">5. Blameless Culture &rarr;</a></li>
+                    <li><a href="toil-reduction.html">6. Toil Reduction & Automation &rarr;</a></li>
+                    <li><a href="release-engineering.html">7. Release Engineering &rarr;</a></li>
+                    <li><a href="capacity-planning.html">8. Capacity Planning &rarr;</a></li>
+                    <li><a href="Cloud-Suitability-And-Transformation-Strategy-Assessment-Tool.html">9. Cloud Suitability And Transformation Strategy Questionnaire Tool &rarr;</a></li>
+                    <li><a href="aws-migration.html">10. AWS Migration Strategy &rarr;</a></li>
+                </ul>
+            </nav>
 
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
-
-        <section id="red-method">
-            <h2>2. The RED Method (Microservice Architecture Standard)</h2>
-            <p>
-                Developed by Tom Wilkie, the RED Method treats microservices as distinct standalone engines. It optimizes service-level dashboard patterns by focusing exclusively on request-driven behaviors:
-            </p>
-            <ul style="line-height: 1.8; padding-left: 1.5rem; margin: 1.5rem 0;">
-                <li><strong>Rate:</strong> The volume of read and write requests entering your application context per second.</li>
-                <li><strong>Errors:</strong> The absolute quantity of inbound requests that fail to process successfully.</li>
-                <li><strong>Duration:</strong> The exact performance window and execution time that requests consume across runtime layers.</li>
-            </ul>
-        </section>
-
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
-
-        <section id="sli-slo-sla">
-            <h2>3. SLIs, SLOs, and SLAs: The Reliability Hierarchy</h2>
-            <p>
-                An SLI (Service Level Indicator), SLO (Service Level Objective), and SLA (Service Level Agreement) work together in a hierarchy of metrics to define and guarantee system reliability. By managing these parameters systematically, teams establish a shared data-driven vocabulary across development, infrastructure, and corporate business segments.
-            </p>
-
-            <ul style="line-height: 1.8; padding-left: 1.5rem; margin: 1.5rem 0;">
-                <li style="margin-bottom: 1rem;">
-                    <strong>1. Service Level Indicator (SLI)</strong>
-                    <br>The specific metric you measure to assess system health (e.g., latency, error rate).
-                    <ul class="nested-list">
-                        <li><em>Example:</em> The percentage of HTTP API requests that return a successful 200 status code within 100 milliseconds.</li>
-                        <li><em>Note:</em> See <a href="core-metrics.html">core-metrics.html</a> which has RED and Golden Signals for further SLI examples.</li>
-                    </ul>
-                </li>
-                <li style="margin-bottom: 1rem;">
-                    <strong>2. Service Level Objective (SLO)</strong>
-                    <br>The internal target or goal you set for your SLI.
-                    <ul class="nested-list">
-                        <li><em>Example:</em> 99.9% of all API requests must successfully return a 200 status within 100 milliseconds over a 30-day period.</li>
-                    </ul>
-                </li>
-                <li style="margin-bottom: 1rem;">
-                    <strong>3. Service Level Agreement (SLA)</strong>
-                    <br>The legally binding promise made to users, along with consequences (like refunds or service credits) if the SLO is not met.
-                    <ul class="nested-list">
-                        <li><em>Example:</em> If the API's monthly availability falls below 99.0%, the vendor guarantees a 10% refund on the customer's monthly bill.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h3>Real-World Execution Examples</h3>
-            
-            <h4>1. E-Commerce Website (Checkout Service)</h4>
-            <ul style="line-height: 1.7; padding-left: 1.5rem; margin-bottom: 1.5rem;">
-                <li><strong>SLI:</strong> The time it takes for a user to click "Place Order" and receive a confirmation page.</li>
-                <li><strong>SLO:</strong> 99% of checkout requests must complete in less than 2 seconds.</li>
-                <li><strong>SLA:</strong> If the checkout service experiences an availability rate lower than 99.5% for two consecutive months, Developers must work on Tickets specifically to meet SLO Objective, Developers will be On-Call during applicable incidents and customers are entitled to account credits.</li>
-            </ul>
-
-            <h4>2. Streaming Platform (Video Playback)</h4>
-            <ul style="line-height: 1.7; padding-left: 1.5rem; margin-bottom: 1.5rem;">
-                <li><strong>SLI:</strong> The time it takes for a video to start playing after a user presses "Play" (startup latency).</li>
-                <li><strong>SLO:</strong> 98% of videos must start playing in less than 1.5 seconds.</li>
-                <li><strong>SLA:</strong> Developers must work on Tickets specifically to meet SLO Objective, Developers will be On-Call during applicable incidents and Premium tier subscribers will receive a free month of service if startup latency exceeds 3 seconds for more than 4 hours in a billing cycle.</li>
-            </ul>
-
-            <div class="image-wrapper">
-                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;"><strong>The Reliability Target Framework Matrix</strong></p>
-                <img src="assets/images/SLI-SLO-SLA.jpg" alt="SLI, SLO, and SLA Hierarchy Diagram">
-            </div>
-        </section>
-
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
-
-        <section id="deployment-blueprints">
-            <h2>Production Infrastructure Blueprints</h2>
-
-            <div class="deploy-box">
-                <h3 style="margin-top: 0; margin-bottom: 0.5rem;">Deploy this Observability Core Locally</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
-                    A containerized, lightweight open-source Observability Core using Prometheus, Grafana, OpenTelemetry Collector, and Jaeger.
+            <main class="obs-main-content">
+                <h1>Monitoring & Observability Frameworks</h1>
+                <p class="lead" style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem;">
+                    Observability measures how well you can infer the internal states of a production ecosystem solely from its external outputs—metrics, logs, and distributed traces. Discover the engineering standards that drive data-driven visibility.
                 </p>
-                <a href="https://github.com/qaconcept/local-prometheus-grafana-otel-collector" target="_blank" rel="noopener noreferrer" style="background-color: var(--accent-color); color: var(--bg-primary); padding: 0.6rem 1.2rem; border-radius: 0.25rem; font-weight: bold; text-decoration: none; display: inline-block; font-size: 0.9rem;">
-                    Get Local Deployment Blueprints &rarr;
-                </a>
-            </div>
 
-            <div class="deploy-box">
-                <h3 style="margin-top: 0; margin-bottom: 0.5rem;">Deploy this Observability Core in AWS with AWS HA Observability Stack (AWS Prometheus + Grafana + OpenTelemetry Collector)</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
-                    A production-grade, highly available, open-source observability pipeline engineered on AWS using a strictly isolated, layered Terraform design pattern.
-                </p>
-                <a href="https://github.com/qaconcept/aws-prometheus-grafana-otel-collector" target="_blank" rel="noopener noreferrer" style="background-color: var(--accent-color); color: var(--bg-primary); padding: 0.6rem 1.2rem; border-radius: 0.25rem; font-weight: bold; text-decoration: none; display: inline-block; font-size: 0.9rem;">
-                    Get AWS Deployment Blueprints &rarr;
-                </a>
-            </div>
-        </section>
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 2rem 0;">
 
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
+                <section id="golden-signals">
+                    <h2>1. The Four Golden Signals (Google SRE Framework)</h2>
+                    <p>
+                        Originally formalized within the Google Site Reliability Engineering Handbook, tracking these four foundational dimensions ensures comprehensive visibility into user-facing and systemic performance anomalies.
+                    </p>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <h4>Latency</h4>
+                            <p>The time taken to service a request. It is critical to differentiate between the latency of successful requests versus failed requests to prevent masking real bottlenecks.</p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Traffic</h4>
+                            <p>A measure of how much demand is being placed on your system, measured via high-level architecture metrics such as HTTP requests per second or concurrent database connections.</p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Errors</h4>
+                            <p>The rate of requests that fail, either explicitly (e.g., HTTP 500 internal server errors) or implicitly (e.g., an HTTP 200 success response containing unexpected or broken payloads).</p>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Saturation</h4>
+                            <p>A measure of how "full" your system service footprint is. This highlights the most constrained infrastructure layers, such as memory consumption limits or disk I/O utility spikes.</p>
+                        </div>
+                    </div>
+                </section>
 
-        <section id="references" style="font-size: 0.9rem; color: var(--text-secondary);">
-            <h2>Further Reading & Official SRE References</h2>
-            <p style="margin-top: 0.5rem; margin-bottom: 1rem;">To dive deeper into the theory and industry execution models of monitoring and telemetry, check out these authoritative industry materials:</p>
-            <ul style="padding-left: 1.5rem; line-height: 1.8;">
-                <li>
-                    <strong>Google SRE Handbook</strong> – Chapter 6: Monitoring Distributed Systems.
-                    <br><span class="ref-link">Source Guide: <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener noreferrer">https://sre.google/sre-book/monitoring-distributed-systems/</a></span>
-                </li>
-                <li>
-                    <strong>Google SRE Workbook</strong> – Managing Service Level Objectives in Production Environments.
-                    <br><span class="ref-link">Source Workbook: <a href="https://sre.google/workbook/table-of-contents/" target="_blank" rel="noopener noreferrer">https://sre.google/workbook/table-of-contents/</a></span>
-                </li>
-                <li>
-                    <strong>Google Cloud DevOps Framework</strong> – SRE Fundamentals: Defining SLIs, SLOs, and SLAs.
-                    <br><span class="ref-link">Source Context: <a href="https://cloud.google.com/blog/products/devops-sre/sre-fundamentals-slis-slas-and-slos" target="_blank" rel="noopener noreferrer">https://cloud.google.com/blog/products/devops-sre/sre-fundamentals-slis-slas-and-slos</a></span>
-                </li>
-                <li>
-                    <strong>Official OpenTelemetry Architecture Docs</strong> – Core Collector Telemetry Concepts.
-                    <br><span class="ref-link">Source Context: <a href="https://opentelemetry.io/docs/concepts/what-is-opentelemetry/" target="_blank" rel="noopener noreferrer">https://opentelemetry.io/docs/concepts/what-is-opentelemetry/</a></span>
-                </li>
-                <li>
-                    <strong>The RED Method</strong> – How to Design Service Metrics (Tom Wilkie / Grafana Labs).
-                    <br><span class="ref-link">Source Framework: <a href="https://grafana.com/blog/2018/08/02/the-red-method-how-to-scan-your-microservices-metrics/" target="_blank" rel="noopener noreferrer">https://grafana.com/blog/2018/08/02/the-red-method-how-to-scan-your-microservices-metrics/</a></span>
-                </li>
-            </ul>
-        </section>
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
 
-    </main>
+                <section id="red-method">
+                    <h2>2. The RED Method (Microservice Observability Strategy)</h2>
+                    <p>
+                        Formulated by Tom Wilkie, the RED method focuses specifically on evaluating request-scoped behavior patterns. It provides an optimal telemetry footprint layout for tracking service-level microarchitectures:
+                    </p>
+                    <ul>
+                        <li style="margin-bottom: 0.5rem;"><strong>Rate:</strong> The volume of operational requests processing through the application stack per second.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Errors:</strong> The aggregate volume of explicit or implicit request actions that fail to fulfill execution contracts safely.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Duration:</strong> The systematic measure of execution intervals taken by user-driven transaction scopes.</li>
+                    </ul>
+                </section>
+
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
+
+                <section id="use-method">
+                    <h2>3. The USE Method (Infrastructure Performance Standard)</h2>
+                    <p>
+                        Designed by Brendan Gregg for system infrastructure engineering diagnostic workflows, the USE framework focuses heavily on hardware resource components (CPUs, Memory, Storage devices, Network interfaces):
+                    </p>
+                    <ul>
+                        <li style="margin-bottom: 0.5rem;"><strong>Utilization:</strong> The total percentage duration over explicit sampling horizons where the core physical asset was executing work.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Saturation:</strong> The volume of extra backlog execution demands waiting on device access queues due to downstream constraints.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Errors:</strong> The absolute aggregate tally of underlying hardware or physical device-level error conditions.</li>
+                    </ul>
+                </section>
+
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
+
+                <section id="three-pillars">
+                    <h2>4. The Three Pillars of Modern Telemetry Architecture</h2>
+                    <p>
+                        Correlating distinct data profiles across the foundational observability planes accelerates root-cause diagnostic workflows during complex systemic degradations.
+                    </p>
+
+                    <div style="margin: 2rem 0;">
+                        <div class="mermaid" style="background: var(--bg-secondary); padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+                            graph TD
+                                A[Observability Telemetry] --> B(Metrics)
+                                A --> C(Logs)
+                                A --> D(Traces)
+                                B --> B1[Aggregated Trends & Counts]
+                                C --> C1[Granular Context Event Rows]
+                                D --> D1[Distributed End-to-End Request Paths]
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">Metrics (Numeric Ecosystem States)</h4>
+                        <p>Numeric values aggregated over explicit timestamps. They feature extremely efficient resource consumption storage metrics, making them perfect for historical real-time visual trending data and immediate automated alert triggering profiles.</p>
+                        
+                        <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; margin-top: 1.5rem;">Logs (Discrete Immutable Event Rows)</h4>
+                        <p>Detailed textual event output generated line-by-line during app runtime. While requiring massive storage volumes, log events contain context rich strings showing specific code exceptions and variable state fields.</p>
+                        
+                        <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; margin-top: 1.5rem;">Traces (Distributed Transaction Context Paths)</h4>
+                        <p>Traces explicitly capture transaction request execution journeys across cascading network service boundaries. They show structural latencies and downstream network hops using unique `TraceIDs` injected directly into call headers.</p>
+                    </div>
+                </section>
+
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
+
+                <section id="reference-materials">
+                    <h2>5. Core Industry Reference Material</h2>
+                    <p>For deep structural explorations into distributed observability primitives, refer to these authoritative industry references:</p>
+                    <ul style="padding-left: 1.25rem; margin-top: 1rem;">
+                        <li style="margin-bottom: 1.25rem;">
+                            <strong>Google SRE Book Chapter 6: Monitoring Distributed Systems</strong> – Core architecture principles and operational metrics guidance.
+                            <br><span class="ref-link">Source Guide: <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener noreferrer">https://sre.google/sre-book/monitoring-distributed-systems/</a></span>
+                        </li>
+                        <li style="margin-bottom: 1.25rem;">
+                            <strong>Google SRE Workbook: Monitoring (SLI/SLO Concepts)</strong> – Practical deployment recipes for measuring user journeys accurately.
+                            <br><span class="ref-link">Source Workbook: <a href="https://sre.google/workbook/monitoring/" target="_blank" rel="noopener noreferrer">https://sre.google/workbook/monitoring/</a></span>
+                        </li>
+                        <li style="margin-bottom: 1.25rem;">
+                            <strong>Google SRE Fundamentals: SLIs, SLAs, and SLOs</strong> – Establishing explicit mathematical criteria for tracking application health metrics.
+                            <br><span class="ref-link">Source Context: <a href="https://cloud.google.com/blog/products/devops-sre/sre-fundamentals-slis-slas-and-slos" target="_blank" rel="noopener noreferrer">https://cloud.google.com/blog/products/devops-sre/sre-fundamentals-slis-slas-and-slos</a></span>
+                        </li>
+                        <li style="margin-bottom: 1.25rem;">
+                            <strong>Official OpenTelemetry Architecture Docs</strong> – Core Collector Telemetry Concepts.
+                            <br><span class="ref-link">Source Context: <a href="https://opentelemetry.io/docs/concepts/what-is-opentelemetry/" target="_blank" rel="noopener noreferrer">https://opentelemetry.io/docs/concepts/what-is-opentelemetry/</a></span>
+                        </li>
+                        <li style="margin-bottom: 1.25rem;">
+                            <strong>The RED Method</strong> – How to Design Service Metrics (Tom Wilkie / Grafana Labs).
+                            <br><span class="ref-link">Source Framework: <a href="https://grafana.com/blog/2018/08/02/the-red-method-how-to-scan-your-microservices-metrics/" target="_blank" rel="noopener noreferrer">https://grafana.com/blog/2018/08/02/the-red-method-how-to-scan-your-microservices-metrics/</a></span>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+
+        </div>
+    </div>
 
     <footer>
-        <div class="container" style="text-align: center; padding: 2rem 0; font-size: 0.85rem; color: var(--text-secondary);">
-            <p>&copy; 2026 SRE Concepts. Built with a focus on high-availability architectures and infrastructure observability.</p>
+        <div class="container" style="text-align: center; padding: 2rem 0; font-size: 0.85rem; color: var(--text-secondary); border-top: 1px solid var(--border-color);">
+            <p>&copy; 2026 SRE Concepts. Built to support high-availability platform architectures and modern observability culture.</p>
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script>
+        // Toggle Mobile Menu functionality
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+        }
+    </script>
 </body>
 </html>
