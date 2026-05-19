@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Cloud Migration Strategies | SRE Concepts</title>
+    <meta name="description" content="A comprehensive guide to AWS mass cloud migration frameworks, the 6 Rs, 7 Rs, and multi-phase execution strategies.">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .migration-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .meta-box {
+            background-color: var(--bg-secondary);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            border-radius: 0 0.25rem 0.25rem 0;
+        }
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .strategy-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+        }
+        .strategy-card h4 {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        .phase-list {
+            list-style: none;
+            padding: 0;
+        }
+        .phase-item {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            position: relative;
+        }
+        .phase-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--bg-primary);
+            font-weight: bold;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .image-wrapper {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .image-wrapper img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.25rem;
+            margin-top: 0.75rem;
+        }
+        blockquote {
+            border-left: 4px solid #38bdf8;
+            background-color: var(--bg-secondary);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-primary);
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .ref-link {
+            word-break: break-all;
+            font-size: 0.85rem;
+        }
+        .migration-phase-section {
+            margin-top: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">SRE<span>CONCEPTS</span></a>
+            <button class="hamburger" id="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="observability.html">Observability</a></li>
+                <li><a href="incident-response.html">Incident Response</a></li>
+                <li><a href="tools-resources.html">Tools & Resources</a></li>
+                <li><a href="about.html">About the Author</a></li>
+                <li>
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">☀️</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container migration-container">
+        <h1>AWS Cloud Migration Frameworks & Strategies</h1>
+        <p class="lead" style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem;">
+            Moving enterprise workloads to the cloud requires an optimized, structured methodology. Discover the core mechanics of mass migrations, the foundational execution phases, and how to align application architectures with AWS target operating models.
+        </p>
+
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 2rem 0;">
+
+        <section id="migration-strategies">
+            <h2>The Strategies: Formulating Your Workload Blueprint</h2>
+            <p>
+                An explicit AWS migration strategy dictates the lifecycle, resource expenditure, and target design of every single application inside an enterprise IT portfolio. Depending on corporate timeline constraints and the technical debt of individual workloads, organizations evaluate applications against the classic <strong>6 Rs of Migration Strategies</strong>, which has expanded into the <strong>7 Rs Framework</strong> to account for cloud-native infrastructure platforms.
+            </p>
+
+            <div class="image-wrapper">
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;"><strong>The 6 Rs of Migration Strategies Framework</strong></p>
+                <img src="assets/images/The-6-Rs-of-Migration Strategies.jpg" alt="The 6 Rs of Migration Strategies Diagram">
+            </div>
+
+            <h3>The Application Migration Classifications</h3>
+            <div class="strategy-grid">
+                <div class="strategy-card">
+                    <h4>1. Rehost ("Lift and Shift")</h4>
+                    <p>Moving workloads directly from on-premises target systems to instances in the cloud with zero structural code alterations. This is optimal for rapid mass data center evacuations where speed out-prioritizes immediate modernization benefits.</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>2. Replatform ("Lift, Tinker, and Shift")</h4>
+                    <p>Introducing minimal backend optimizations to secure direct cloud advantages without modifying the application core. A typical use case includes dropping an on-premises relational database layout onto a fully managed engine like Amazon RDS.</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>3. Relocate (The 7th R)</h4>
+                    <p>Transferring production hypervisor profiles or instances directly to cloud versions of the infrastructure (such as VMware Cloud on AWS) or moving active AWS services seamlessly between localized VPC environments and distinct accounts without structural architecture modifications.</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>4. Refactor / Re-architect</h4>
+                    <p>Reimagining and redesigning application logic using cloud-native microservices, serverless components, and container fabrics. This approach unlocks maximum elasticity and scaling capacity, though it presents the highest operational complexity.</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>5. Repurchase ("Drop and Shop")</h4>
+                    <p>Abandoning the existing custom configuration or proprietary legacy model to transition to a standardized Software-as-a-Service (SaaS) engine or an equivalent turnkey offering sourced through the AWS Marketplace.</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>6. Retire</h4>
+                    <p>Decommissioning underutilized, idle, or completely obsolete asset configurations (often identified via tracking infrastructure as "zombie applications" with minimal CPU or inbound connectivity metrics over a 90-day window) to clean up infrastructure footprints.</p>
+                </div>
+                <div class="strategy-card">
+                    <h4>7. Retain</h4>
+                    <p>Keeping dependencies right where they are in the source environment. This strategy applies when complex security constraints, unresolved localized hardware connections, or significant investments require postponing cloud deployment for a later phase.</p>
+                </div>
+            </div>
+
+            <div class="image-wrapper">
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;"><strong>Moving Workloads to AWS via the 7 Rs</strong></p>
+                <img src="assets/images/The-7-Rs-strategies-for-migrating-workloads-to-AWS.jpg" alt="The 7 Rs Migration Strategies Diagram">
+            </div>
+        </section>
+
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
+
+        <section id="migration-phases">
+            <h2>The Three Phases of Migration Execution</h2>
+            <p>
+                To mitigate operational risk, control running expenses, and successfully scale deployment engines, AWS structures the engineering journey across three iterative lifecycle components:
+            </p>
+
+            <ul class="phase-list">
+                <li class="phase-item">
+                    <span class="phase-badge">Phase 1</span>
+                    <strong>Assess:</strong> Deeply inspect the baseline operational health and cloud readiness of the enterprise. This block focuses on mapping potential financial cases, evaluating key stakeholders, and formalizing a directional return on investment (ROI).
+                </li>
+                <li class="phase-item">
+                    <span class="phase-badge">Phase 2</span>
+                    <strong>Mobilize:</strong> Building actionable migration workstreams while fixing early engineering skill gaps. Teams deploy secure, automated multi-account baselines called "landing zones" via tools like AWS Control Tower, while organizing application portfolio architectures into logical execution groups.
+                </li>
+                <li class="phase-item">
+                    <span class="phase-badge">Phase 3</span>
+                    <strong>Migrate & Modernize:</strong> Migrating applications incrementally through sequential waves. Teams run parallel deployments to validate operational integrity, switch over active traffic, and continuously optimize resource consumption post-migration.
+                </li>
+            </ul>
+        </section>
+
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
+
+        <section id="mass-migration-deep-dive">
+            <h2>Deep Dive: A Process for Mass Migrations to the Cloud</h2>
+            
+            <div class="meta-box">
+                <strong>Framework Insight:</strong> Adapted from the enterprise cloud strategy documentation authored by <strong>Stephen Orban</strong> (Published 01 NOV 2016 in <em>Adoption, Enterprise Strategy, Migration</em>).
+            </div>
+
+            <p>
+                Mass migration is fundamentally an evolution of organizational workflows and engineering habits. As the industry notes, managing this lifecycle is a systematic journey:
+            </p>
+
+            <blockquote>
+                “We cannot and should not stop people from migration. We have to give them a better life at home. Migration is a process not a problem.” <br>
+                <span style="font-size: 0.85rem; color: var(--text-secondary);">— William Lacy Swing</span>
+            </blockquote>
+
+            <p>
+                To move an entire enterprise IT portfolio smoothly without stalling out, cloud leaders rely on a 5-Phase Migration Process that structures broad goals into predictable, manageable technical sequences.
+            </p>
+
+            <br> <h3>The 5-Phase Migration Lifecycle Breakdown</h3>
+            
+            <br> <div class="migration-phase-section">
+                <h4>Phase 1: Opportunity Evaluation</h4>
+                <p>
+                    Every sustainable migration needs a compelling driver or clear corporate business case to unify the organization. While early moves were sometimes executed on instinct, modern mass migrations align with measurable triggers: hardware lease expirations, real estate consolidated from data center closures, globalization needs, M&A integrations, or a mandate for unified, automated architectures. 
+                </p>
+                <p>
+                    For instance, top-tier enterprises often map their business cases directly to developer productivity. Moving to managed cloud infrastructures can eliminate infrastructure provisioning wait times, expanding overall development capacity to focus heavily on net-new feature growth rather than server upkeep. Regardless of the driver, setting definitive, aggressive objectives prevents migration stalls.
+                </p>
+            </div>
+
+            <div class="migration-phase-section">
+                <h4>Phase 2: Portfolio Discovery and Planning</h4>
+                <p>
+                    This phase requires mapping out your internal assets, discovering complex interdependencies, and choosing what to move first. Teams utilize automated discovery tools alongside system configuration management databases (CMDBs) to audit network layers and host architectures. 
+                </p>
+                <p>
+                    Workloads exist on a spectrum of complexity—ranging from standard, low-complexity virtualized services to monolithic mainframes. Beginning with low-complexity applications provides rapid "quick wins" and builds operational confidence. Because complex legacy systems lack a magic button for immediate migration, teams typically lean toward automated rehosting for modernized virtual applications, while scheduling deep refactoring for monolithic systems.
+                </p>
+            </div>
+
+            <div class="migration-phase-section">
+                <h4>Phase 3 & 4: Designing, Migrating, and Validating Applications</h4>
+                <p>
+                    At this stage, operations shift from bird's-eye portfolio planning to an execution-focused "migration factory." Applications are handled one by one, moving through tailored waves based on their designated strategy (the 6 Rs / 7 Rs). 
+                </p>
+                <p>
+                    Emphasize a philosophy of continuous iteration. Establish dedicated, agile teams organized around cohesive "migration themes"—such as specialized groups for specific business units, web frontends, or common database backends. This specialization helps teams spot patterns and scale up the factory's output. A central Cloud Center of Excellence (CCoE) provides governance and guardrails throughout this phase, while business owners validate live traffic routing and performance before old environments are safely decommissioned.
+                </p>
+            </div>
+
+            <div class="migration-phase-section">
+                <h4>Phase 5: Modern Operating Model</h4>
+                <p>
+                    As workloads transition to live cloud environments, the migration acts as a catalyst for cultural evolution. The target operating model should be treated as an evergreen ecosystem of people, processes, and technology that refines itself with every application migrated. You do not need to solve for every hypothetical operational edge-case on day one. Instead, use early validation waves to lay the foundation, and allow your DevOps and cloud-native practices to mature naturally as your migration factory gathers momentum.
+                </p>
+            </div>
+        </section>
+
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
+
+        <section id="funding-isolation">
+            <h2>Funding, Governance, and Isolation Scenarios</h2>
+            
+            <h3>The AWS Migration Acceleration Program (MAP)</h3>
+            <p>
+                To offset initial migration costs and accelerate your timeline, AWS provides the <strong>Migration Acceleration Program (MAP)</strong>. MAP delivers an outcome-driven architecture, structured training modules, automated tooling mechanisms, and targeted financial investments to lower double-headed hosting costs during the transition phases.
+            </p>
+
+            <h3>Enterprise Isolation & Complex Divestitures</h3>
+            <p>
+                During corporate transitions, spin-offs, or divestitures, building legally isolated and distinct cloud environments is critical. For practical, field-tested guidance on navigating complex infrastructure splits and managing multi-account isolation strategies under strict timelines, refer to the enterprise architecture blueprints below.
+            </p>
+        </section>
+
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0;">
+
+        <section id="references" style="font-size: 0.9rem; color: var(--text-secondary);">
+            <h2>Official References & Primary Literature</h2>
+            <p>To view the foundational source material and engineering frameworks cited across this guide, consult the following resources:</p>
+            <ul style="line-height: 1.6; padding-left: 1.5rem;">
+                <li>
+                    <strong>Stephen Orban (Author)</strong> – <em>A Process for Mass Migrations to the Cloud</em> (AWS Enterprise Strategy Series). 
+                    <br><span class="ref-link">Source Context: <a href="https://aws.amazon.com/blogs/enterprise-strategy/considering-a-mass-migration-to-the-cloud/" target="_blank" rel="noopener noreferrer">Mass Migration Introduction (Part 1)</a> | <a href="https://aws.amazon.com/blogs/enterprise-strategy/6-strategies-for-migrating-applications-to-the-cloud/" target="_blank" rel="noopener noreferrer">6 Strategies for Migration Lifecycle (Part 3)</a></span>
+                </li>
+                <li>
+                    <strong>Jonathan Allen (Enterprise Strategist, AWS)</strong> – <em>Understanding the 7 Rs Cloud Migration Strategies</em>.
+                    <br><span class="ref-link">Source Framework: <a href="https://builder.aws.com/content/2cKbgI3WsAYTiDM0J48uEMVqOVW/understanding-the-7-rs-cloud-migration-strategies" target="_blank" rel="noopener noreferrer">AWS Builder Migration Blueprint</a></span>
+                </li>
+                <li>
+                    <strong>AWS Prescriptive Guidance Documentation</strong> – Decommissioning and Retiring Assets.
+                    <br><span class="ref-link">Technical Guide: <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/migration-retiring-applications/welcome.html" target="_blank" rel="noopener noreferrer">Assessing Applications to be Retired</a></span>
+                </li>
+                <li>
+                    <strong>AWS Migration Acceleration Program (MAP)</strong> – Program Details and Funding Mechanics.
+                    <br><span class="ref-link">Program Page: <a href="https://aws.amazon.com/migration-acceleration-program/" target="_blank" rel="noopener noreferrer">AWS MAP Portal</a></span>
+                </li>
+                <li>
+                    <strong>Production Scenario Video Resource</strong> – <em>AWS Cloud Migration Specialist: 92 Brutal, Field-Tested "AWS Cloud Migration" Production Scenarios!</em> 
+                    <br><span class="ref-link">Video Reference: <a href="https://www.youtube.com/watch?v=tkB-RbZbaQ4" target="_blank" rel="noopener noreferrer">Watch Production Field Scenarios on YouTube</a></span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 2rem 0; font-size: 0.85rem; color: var(--text-secondary);">
+            <p>&copy; 2026 SRE Concepts. Built with a focus on high-availability architectures and infrastructure observability.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

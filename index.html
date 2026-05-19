@@ -98,8 +98,6 @@
             </button>
             <ul class="nav-links" id="nav-links">
                 <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="observability.html">Observability</a></li>
-                <li><a href="incident-response.html">Incident Response</a></li>
                 <li><a href="tools-resources.html">Tools & Resources</a></li>
                 <li><a href="about.html">About the Author</a></li>
                 <li>
@@ -118,14 +116,15 @@
                     <h3>SRE Core Concepts:</h3>
                     <ul class="sidebar-panel-links">
                         <li><a href="core-metrics.html">1. Core Reliability Metrics &rarr;</a></li>
-                        <li><a href="error-budgets.html">2. Error Budgets &rarr;</a></li>
-                        <li><a href="toil-reduction.html">3. Toil Reduction & Automation &rarr;</a></li>
-                        <li><a href="observability.html">4. Monitoring & Observability &rarr;</a></li>
-                        <li><a href="incident-response.html">5. Incident Response & Triage &rarr;</a></li>
-                        <li><a href="blameless-postmortems.html">6. Blameless Culture &rarr;</a></li>
+                        <li><a href="observability.html">2. Monitoring & Observability &rarr;</a></li>
+                        <li><a href="error-budgets.html">3. Error Budgets &rarr;</a></li>
+                        <li><a href="incident-response.html">4. Incident Response & Triage &rarr;</a></li>
+                        <li><a href="blameless-postmortems.html">5. Blameless Culture &rarr;</a></li>
+                        <li><a href="toil-reduction.html">6. Toil Reduction & Automation &rarr;</a></li>
                         <li><a href="release-engineering.html">7. Release Engineering &rarr;</a></li>
                         <li><a href="capacity-planning.html">8. Capacity Planning &rarr;</a></li>
-                        <li><a href="aws-migration.html">9. AWS Migration Strategy &rarr;</a></li>
+                        <li><a href="Cloud-Suitability-And-Transformation-Strategy-Assessment-Tool.html">9. Cloud Suitability And Transformation Strategy Questionnaire Tool &rarr;</a></li>
+                        <li><a href="aws-migration.html">10. AWS Migration Strategy &rarr;</a></li>
                     </ul>
                 </nav>
 
@@ -143,6 +142,18 @@
                         
                         <p style="margin-bottom: 2rem; font-style: italic; color: var(--accent-color);">The goal of SRE is simple but powerful: Maximize reliability without sacrificing velocity.</p>
                         
+                        <div style="margin-bottom: 2rem; border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 0.5rem; background-color: rgba(255,255,255,0.02);">
+                            <h3 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 1rem; font-weight: 700;">Google Free SRE Books:</h3>
+                            <ul style="padding-left: 1.5rem; margin-bottom: 1.5rem;">
+                                <li style="margin-bottom: 0.35rem;">Building Secure & Reliable Systems (Best Practices for Designing, Implementing and Maintaining Systems)</li>
+                                <li style="margin-bottom: 0.35rem;">The Site Reliability Workbook (Practical Ways to Implement SRE)</li>
+                                <li style="margin-bottom: 0.35rem;">Site Reliability Engineering (How Google Runs Production Systems)</li>
+                            </ul>
+                            <a href="https://sre.google/books/" target="_blank" style="font-size: 0.9rem; font-weight: 600; color: var(--accent-color); text-decoration: none; display: inline-block; transition: color 0.2s ease;">
+                                Use this link for all three free online books &rarr;
+                            </a>
+                        </div>
+
                         <h3 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 0.75rem; font-weight: 700;">What is SRE?</h3>
                         <p style="margin-bottom: 1.25rem;">SRE treats operations as a software problem. Instead of manually running servers and reacting to outages, SREs use code, automation, monitoring, data, and clear service level objectives to proactively build reliability into systems.</p>
                         
@@ -159,13 +170,14 @@
                         <p style="margin-bottom: 1.25rem;">This website covers the core foundations and practical skills every SRE needs:</p>
                         <ul style="padding-left: 1.5rem; margin-bottom: 1.25rem;">
                             <li style="margin-bottom: 0.35rem;"><strong>Core Reliability Metrics</strong> — Understanding SLI, SLO, and SLA</li>
-                            <li style="margin-bottom: 0.35rem;"><strong>Error Budgets</strong> — How to calculate them and use them to make better decisions</li>
-                            <li style="margin-bottom: 0.35rem;"><strong>Toil Reduction & Automation</strong> — Identifying and eliminating manual repetitive work</li>
                             <li style="margin-bottom: 0.35rem;"><strong>Monitoring & Observability</strong> — Golden Signals, RED metrics, and modern tooling (including Datadog)</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Error Budgets</strong> — How to calculate them and use them to make better decisions</li>
                             <li style="margin-bottom: 0.35rem;"><strong>Incident Response & Triage</strong> — Building effective on-call and incident management processes</li>
                             <li style="margin-bottom: 0.35rem;"><strong>Blameless Culture</strong> — Writing high-quality postmortems and fostering psychological safety</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Toil Reduction & Automation</strong> — Identifying and eliminating manual repetitive work</li>
                             <li style="margin-bottom: 0.35rem;"><strong>Release Engineering</strong> — Safe deployment strategies and testing practices</li>
                             <li style="margin-bottom: 0.35rem;"><strong>Capacity Planning</strong> — Preparing your systems for growth</li>
+                            <li style="margin-bottom: 0.35rem;"><strong>Cloud Suitability And Transformation Strategy Assessment Tool</strong> — Assessing legacy workloads and application transformation planning</li>
                             <li style="margin-bottom: 0.35rem;"><strong>AWS Migration Strategy</strong> — The 6 Rs and practical cloud migration approaches</li>
                         </ul>
                         <p style="margin-bottom: 2rem;">Each topic includes clear explanations, real-world examples, checklists, templates, and lessons learned from production environments.</p>
@@ -198,24 +210,24 @@
                     <p style="color: var(--text-secondary); font-size: 0.95rem;">Master the operational math behind Service Level Indicators (SLIs), Service Level Objectives (SLOs), and SLAs to accurately define service health.</p>
                 </div>
                 <div class="card">
-                    <h3 style="margin-bottom: 0.75rem;"><a href="error-budgets.html">2. Error Budgets</a></h3>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Learn how to balance product development velocity with structural infrastructure stability using objective error budget calculations.</p>
-                </div>
-                <div class="card">
-                    <h3 style="margin-bottom: 0.75rem;"><a href="toil-reduction.html">3. Toil Reduction & Automation</a></h3>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Identify, measure, and eliminate manual, repetitive operational tasks using code-driven automation workflows.</p>
-                </div>
-                <div class="card">
-                    <h3 style="margin-bottom: 0.75rem;"><a href="observability.html">4. Monitoring & Observability</a></h3>
+                    <h3 style="margin-bottom: 0.75rem;"><a href="observability.html">2. Monitoring & Observability</a></h3>
                     <p style="color: var(--text-secondary); font-size: 0.95rem;">Implement telemetry stacks using Golden Signals and RED metrics. Walkthrough real setups using Datadog, Splunk, and OpenTelemetry.</p>
                 </div>
                 <div class="card">
-                    <h3 style="margin-bottom: 0.75rem;"><a href="incident-response.html">5. Incident Response & Triage</a></h3>
+                    <h3 style="margin-bottom: 0.75rem;"><a href="error-budgets.html">3. Error Budgets</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Learn how to balance product development velocity with structural infrastructure stability using objective error budget calculations.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="incident-response.html">4. Incident Response & Triage</a></h3>
                     <p style="color: var(--text-secondary); font-size: 0.95rem;">Accelerate your Mean Time to Resolution (MTTR). Learn modern incident triage, communication paths, and PagerDuty alert dynamics.</p>
                 </div>
                 <div class="card">
-                    <h3 style="margin-bottom: 0.75rem;"><a href="blameless-postmortems.html">6. Blameless Culture</a></h3>
+                    <h3 style="margin-bottom: 0.75rem;"><a href="blameless-postmortems.html">5. Blameless Culture</a></h3>
                     <p style="color: var(--text-secondary); font-size: 0.95rem;">Build an organizational culture of psychological safety. Download customizable root-cause templates and postmortem guidelines.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="toil-reduction.html">6. Toil Reduction & Automation</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Identify, measure, and eliminate manual, repetitive operational tasks using code-driven automation workflows.</p>
                 </div>
                 <div class="card">
                     <h3 style="margin-bottom: 0.75rem;"><a href="release-engineering.html">7. Release Engineering</a></h3>
@@ -226,7 +238,11 @@
                     <p style="color: var(--text-secondary); font-size: 0.95rem;">Forecast load limits, execute automated stress testing configurations, and manage cloud resource provisioning effectively.</p>
                 </div>
                 <div class="card">
-                    <h3 style="margin-bottom: 0.75rem;"><a href="aws-migration.html">9. AWS Migration Strategy</a></h3>
+                    <h3 style="margin-bottom: 0.75rem;"><a href="Cloud-Suitability-And-Transformation-Strategy-Assessment-Tool.html">9. Cloud Suitability And Transformation Strategy Questionnaire Tool</a></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Evaluate legacy infrastructure alignment, migration complexities, and organizational readiness via an audit checklist.</p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><a href="aws-migration.html">10. AWS Migration Strategy</a></h3>
                     <p style="color: var(--text-secondary); font-size: 0.95rem;">Migrate on-prem systems to AWS efficiently using the 6 Rs framework, cloud architecture models, and automated guardrails.</p>
                 </div>
             </div>
