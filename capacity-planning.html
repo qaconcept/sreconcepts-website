@@ -187,15 +187,22 @@
 </head>
 <body>
 
-    <header style="border-bottom: 1px solid var(--border-color); padding: 1.5rem 0;">
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-            <a href="index.html" style="font-weight: 700; font-size: 1.25rem; text-decoration: none; color: var(--text-primary);">SRE <span style="color: var(--accent-color);">Concepts</span></a>
-            <nav id="nav-links" style="display: flex; gap: 1.5rem;">
-                <a href="index.html" style="color: var(--text-secondary); text-decoration: none;">Home</a>
-                <a href="error-budgets.html" style="color: var(--text-secondary); text-decoration: none;">Error Budgets</a>
-                <a href="blameless-postmortems.html" style="color: var(--text-secondary); text-decoration: none;">Postmortems</a>
-                <a href="capacity-planning.html" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Capacity Planning</a>
-            </nav>
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">SRE<span>CONCEPTS</span></a>
+            <button class="hamburger" id="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="tools-resources.html">Tools & Resources</a></li>
+                <li><a href="about.html">About the Author</a></li>
+                <li>
+                    <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">☀️</button>
+                </li>
+            </ul>
         </div>
     </header>
 
