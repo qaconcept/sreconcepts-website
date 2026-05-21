@@ -59,17 +59,11 @@
                     <li>High Availability across multiple AWS Availability Zones via an Application Load Balancer.</li>
                     <li>Zero manual unseal keys handling; auto-unseal runs natively via secure AWS KMS keys policies.</li>
                     <li>Persistent Raft data replication maps directly over Amazon EFS volumes attached to Fargate tasks.</li>
+                <!-- Added Image -->
+                <img src="/assets/images/vault-aws-fargate-HA.png" 
+                     alt="AWS High-Availability Observability Stack with Prometheus, Jaeger, OpenTelemetry Collector and Grafana" 
+                     style="width: 100%; height: auto; border-radius: 0.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">                
                 </ul>
-
-                <div class="mermaid-container" style="background-color: var(--bg-primary); margin-bottom: 1.5rem;">
-                    <div class="mermaid">
-                        graph TD
-                        ALB[Application Load Balancer] --> F1[ECS Fargate Task - Node 1]
-                        ALB --> F2[ECS Fargate Task - Node 2]
-                        F1 & F2 --> EFS[(Shared EFS Storage - Raft)]
-                        F1 & F2 --> KMS[AWS KMS - Auto Unseal]
-                    </div>
-                </div>
 
                 <a href="https://github.com/qaconcept/vault-aws-fargate-ha" target="_blank" rel="noopener noreferrer" style="font-size: 0.95rem; font-weight: 600; color: var(--accent-color); text-decoration: none; display: inline-block;">View GitHub Repository &rarr;</a>
             </div>
