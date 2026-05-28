@@ -99,14 +99,17 @@
                 <div style="font-size: 0.8rem; font-family: monospace; color: var(--accent-color); font-weight: bold; margin-bottom: 0.5rem;">AWS / CLOUD HYBRID / ENTERPRISE TELEMETRY</div>
                 <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">aws-prometheus-grafana-otel-collector</h3>
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
-                    An enterprise-grade cloud blueprint translating the OpenTelemetry framework into a managed cloud-native model. This stack handles ingestion scaling effortlessly by utilizing AWS native managed telemetry backends.
+                    An enterprise-grade, fully decoupled observability blueprint that translates the OpenTelemetry framework into a scalable, cloud-native model on AWS. This stack provides a complete telemetry pipeline with strict isolation, high availability, and clear separation of concerns using modular Terraform.
                 </p>
                 
                 <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-primary);">Key Architectural Features:</h4>
                 <ul style="padding-left: 1.25rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-                    <li>Streams metrics collection data into high-availability **Amazon Managed Service for Prometheus (AMP)** endpoints.</li>
-                    <li>Secures cross-service metric authorization layers using native AWS IAM SigV4 query signing protocols.</li>
-                    <li>Visualizes structural telemetry outputs seamlessly inside isolated **Amazon Managed Grafana (AMG)** instances.</li>
+                    <li>Centralized Ingestion: Applications send metrics, traces, and logs via OTLP to a highly available OpenTelemetry Collector cluster running on AWS ECS Fargate.</li>
+                    <li>Self-Managed High-Availability Backends: Routes traces to Jaeger and metrics to Prometheus, both deployed on AWS ECS Fargate with Multi-AZ redundancy and persistent storage via Amazon EFS.</li>
+                    <li>Unified Visualization: Delivers correlated observability through Grafana on AWS ECS Fargate, with seamless trace-to-metrics linking.</li>
+                    <li>Zero-Trust Networking: Private backend services (Prometheus & Jaeger) accessible only via AWS Cloud Map service discovery, protected by strict security groups.</li>
+                    <li>Full Infrastructure Automation: 11-layer modular Terraform design with Route 53, ACM, ALB, VPC, and IAM for production-grade deployment.</li>
+
                 </ul>
 
                 <!-- Added Image -->
